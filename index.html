@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Heide Park Resort Roblox – Buchung</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script defer src="settings.js"></script>
+<script defer src="calendar.js"></script>
+<script defer src="booking.js"></script>
+
+</head>
+
+<body>
+
+<div class="background-glow"></div>
+
+<header class="topbar">
+
+<div class="logo">
+<i class="fa-solid fa-ticket"></i>
+<span>Heide Park Roblox Booking</span>
+</div>
+
+<div class="account">
+<button id="loginBtn">
+<i class="fa-solid fa-user"></i>
+Login
+</button>
+</div>
+
+</header>
+
+<section class="hero">
+
+<h1>
+Book your visit
+</h1>
+
+<p>
+Reserve your day at the Heide Park Resort Roblox experience
+</p>
+
+</section>
+
+
+<section class="calendar-section">
+
+<div class="calendar-controls">
+
+<button id="prevYear">
+<i class="fa-solid fa-chevron-left"></i>
+</button>
+
+<h2 id="yearDisplay"></h2>
+
+<button id="nextYear">
+<i class="fa-solid fa-chevron-right"></i>
+</button>
+
+</div>
+
+
+<canvas id="calendarCanvas"></canvas>
+
+</section>
+
+
+<div class="popup" id="bookingPopup">
+
+<div class="popup-content">
+
+<div class="popup-header">
+
+<h3>
+<i class="fa-solid fa-calendar-check"></i>
+Booking
+</h3>
+
+<button id="closePopup">
+<i class="fa-solid fa-xmark"></i>
+</button>
+
+</div>
+
+
+<form id="bookingForm">
+
+<label>Contact Platform</label>
+
+<select id="platformSelect">
+
+<option value="discord">Discord</option>
+<option value="tiktok">TikTok</option>
+
+</select>
+
+<label>Username</label>
+
+<input type="text" id="usernameInput" required>
+
+
+<div class="terms">
+
+<input type="checkbox" id="termsCheck">
+
+<span>
+I accept that bookings cannot be refunded
+</span>
+
+</div>
+
+<button type="submit" id="confirmBooking">
+
+<i class="fa-solid fa-check"></i>
+Confirm Booking
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<div class="login-popup" id="loginPopup">
+
+<div class="login-content">
+
+<h3>
+<i class="fa-solid fa-user"></i>
+Account Login
+</h3>
+
+<input type="text" id="localUsername"
+placeholder="Your username">
+
+<button id="saveAccount">
+Save Account
+</button>
+
+</div>
+
+</div>
+
+
+<footer>
+
+<p>
+Heide Park Resort Roblox – Booking System
+</p>
+
+</footer>
+
+
+</body>
+</html>
