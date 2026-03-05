@@ -1,52 +1,64 @@
 /* -------------------------- */
-/* CANVAS SETUP */
+/* CALENDAR STATE */
 /* -------------------------- */
 
 const canvas = document.getElementById("calendarCanvas");
 const ctx = canvas.getContext("2d");
 
-let width;
-let height;
+let currentDate = new Date();
+let currentMonth = currentDate.getMonth();
+let currentYear = currentDate.getFullYear();
 
-function resizeCanvas(){
-
-width = canvas.clientWidth;
-height = canvas.clientHeight;
-
-canvas.width = width;
-canvas.height = height;
-
-drawCalendar();
-
-}
-
-window.addEventListener("resize", resizeCanvas);
-
-
-
-/* -------------------------- */
-/* CALENDAR STATE */
-/* -------------------------- */
-
-let currentYear = new Date().getFullYear();
-let selectedDay = null;
-
-const yearDisplay = document.getElementById("yearDisplay");
-
+let hoveredDay = null;
+let selectedDate = null;
 
 
 /* -------------------------- */
 /* COLORS */
 /* -------------------------- */
 
-const COLORS = {
+const STATUS_COLORS = {
 
-available: "#1f9d55",
-pending: "#ff8c00",
-full: "#ff3b3b",
-disabled: "#444"
+available:"#1db954",
+pending:"#ff8c00",
+full:"#ff3b3b",
+disabled:"#444"
 
 };
+
+
+/* -------------------------- */
+/* CANVAS RESIZE */
+/* -------------------------- */
+
+function resizeCalendar(){
+
+canvas.width = canvas.clientWidth;
+canvas.height = canvas.clientHeight;
+
+drawCalendar();
+
+}
+
+window.addEventListener("resize", resizeCalendar);
+
+
+
+/* -------------------------- */
+/* MONTH TITLE */
+/* -------------------------- */
+
+function updateMonthTitle(){
+
+const months = [
+"January","February","March","April","May","June",
+"July","August","September","October","November","December"
+];
+
+document.getElementById("monthTitle").innerText =
+months[currentMonth] + " " + currentYear;
+
+}
 
 
 
@@ -56,70 +68,162 @@ disabled: "#444"
 
 function drawCalendar(){
 
-ctx.clearRect(0,0,width,height);
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-yearDisplay.innerText = currentYear;
+updateMonthTitle();
 
-let today = new Date();
+let firstDay = new Date(currentYear,currentMonth,1).getDay();
+let daysInMonth = new Date(currentYear,currentMonth+1,0).getDate();
 
-let cellWidth = width / 7;
-let cellHeight = height / 6;
+if(firstDay === 0) firstDay = 7;
 
-let dayCounter = 1;
+let cellWidth = canvas.width / 7;
+let cellHeight = canvas.height / 7;
 
-for(let row=0; row<6; row++){
+drawWeekdays(cellWidth);
 
-for(let col=0; col<7; col++){
+let day = 1;
 
-let x = col * cellWidth;
-let y = row * cellHeight;
+for(let row=1; row<=6; row++){
 
-let date = new Date(currentYear, today.getMonth(), dayCounter);
+for(let col=1; col<=7; col++){
 
-if(dayCounter <= 31){
+let x = (col-1)*cellWidth;
+let y = row*cellHeight;
+
+if(row===1 && col<firstDay){
+
+continue;
+
+}
+
+if(day>daysInMonth) break;
+
+drawDayCell(day,x,y,cellWidth,cellHeight);
+
+day++;
+
+}
+
+}
+
+}
+
+
+
+/* -------------------------- */
+/* WEEKDAY HEADER */
+/* -------------------------- */
+
+function drawWeekdays(w){
+
+const names = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+ctx.font="14px Segoe UI";
+ctx.fillStyle="#aaa";
+
+for(let i=0;i<7;i++){
+
+ctx.fillText(names[i], i*w + 10 , 20);
+
+}
+
+}
+
+
+
+/* -------------------------- */
+/* DAY CELL */
+/* -------------------------- */
+
+function drawDayCell(day,x,y,w,h){
+
+let date = new Date(currentYear,currentMonth,day);
 
 let dateStr = formatDate(date);
 
 let status = getDayStatus(dateStr);
 
-drawCell(x,y,cellWidth,cellHeight,dayCounter,status);
-
-}
-
-dayCounter++;
-
-}
-
-}
-
-}
+let color = STATUS_COLORS[status] || STATUS_COLORS.available;
 
 
-
-/* -------------------------- */
-/* DRAW CELL */
-/* -------------------------- */
-
-function drawCell(x,y,w,h,day,status){
-
-ctx.fillStyle = COLORS[status] || COLORS.available;
+/* background */
 
 ctx.globalAlpha = 0.25;
+
+ctx.fillStyle = color;
 
 ctx.fillRect(x,y,w,h);
 
 ctx.globalAlpha = 1;
 
-ctx.strokeStyle = "rgba(255,255,255,0.08)";
+
+/* border */
+
+ctx.strokeStyle="rgba(255,255,255,0.05)";
 ctx.strokeRect(x,y,w,h);
 
 
-ctx.fillStyle = "white";
-ctx.font = "16px Segoe UI";
+/* hover effect */
+
+if(hoveredDay === day){
+
+ctx.strokeStyle="#ff8c00";
+ctx.lineWidth=2;
+
+ctx.strokeRect(x+2,y+2,w-4,h-4);
+
+}
+
+
+/* text */
+
+ctx.fillStyle="white";
+ctx.font="16px Segoe UI";
 
 ctx.fillText(day,x+10,y+22);
 
+
+/* lock icon */
+
+if(!isBookable(date)){
+
+ctx.fillStyle="#888";
+
+ctx.font="12px Segoe UI";
+
+ctx.fillText("Locked",x+10,y+40);
+
 }
+
+}
+
+
+
+/* -------------------------- */
+/* HOVER SYSTEM */
+/* -------------------------- */
+
+canvas.addEventListener("mousemove",(e)=>{
+
+let rect = canvas.getBoundingClientRect();
+
+let x = e.clientX - rect.left;
+let y = e.clientY - rect.top;
+
+let cellWidth = canvas.width / 7;
+let cellHeight = canvas.height / 7;
+
+let col = Math.floor(x / cellWidth);
+let row = Math.floor(y / cellHeight) - 1;
+
+let day = row * 7 + col + 1;
+
+hoveredDay = day;
+
+drawCalendar();
+
+});
 
 
 
@@ -127,34 +231,33 @@ ctx.fillText(day,x+10,y+22);
 /* CLICK SYSTEM */
 /* -------------------------- */
 
-canvas.addEventListener("click", (event)=>{
+canvas.addEventListener("click",(e)=>{
 
 let rect = canvas.getBoundingClientRect();
 
-let x = event.clientX - rect.left;
-let y = event.clientY - rect.top;
+let x = e.clientX - rect.left;
+let y = e.clientY - rect.top;
 
-let cellWidth = width / 7;
-let cellHeight = height / 6;
+let cellWidth = canvas.width / 7;
+let cellHeight = canvas.height / 7;
 
 let col = Math.floor(x / cellWidth);
-let row = Math.floor(y / cellHeight);
+let row = Math.floor(y / cellHeight) - 1;
 
 let day = row * 7 + col + 1;
 
-let today = new Date();
+let date = new Date(currentYear,currentMonth,day);
 
-let clickedDate = new Date(currentYear, today.getMonth(), day);
+let dateStr = formatDate(date);
 
-let dateStr = formatDate(clickedDate);
 
-if(!isDateAllowed(clickedDate)) return;
+if(!isBookable(date)) return;
 
 let status = getDayStatus(dateStr);
 
 if(status !== "available") return;
 
-selectedDay = dateStr;
+selectedDate = dateStr;
 
 openBookingPopup();
 
@@ -163,21 +266,36 @@ openBookingPopup();
 
 
 /* -------------------------- */
-/* YEAR CONTROLS */
+/* MONTH NAVIGATION */
 /* -------------------------- */
 
-document.getElementById("prevYear").onclick = ()=>{
+document.getElementById("prevMonth").onclick = ()=>{
 
+currentMonth--;
+
+if(currentMonth < 0){
+
+currentMonth = 11;
 currentYear--;
 
+}
+
 drawCalendar();
 
 };
 
-document.getElementById("nextYear").onclick = ()=>{
 
+document.getElementById("nextMonth").onclick = ()=>{
+
+currentMonth++;
+
+if(currentMonth > 11){
+
+currentMonth = 0;
 currentYear++;
 
+}
+
 drawCalendar();
 
 };
@@ -185,11 +303,11 @@ drawCalendar();
 
 
 /* -------------------------- */
-/* INITIALIZE */
+/* INIT */
 /* -------------------------- */
 
-window.addEventListener("load", ()=>{
+window.addEventListener("load",()=>{
 
-resizeCanvas();
+resizeCalendar();
 
 });
