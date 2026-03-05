@@ -1,42 +1,34 @@
 /* -------------------------- */
-/* POPUP ELEMENTS */
+/* POPUP ELEMENTE */
 /* -------------------------- */
 
 const popup = document.getElementById("bookingPopup");
-const closePopupBtn = document.getElementById("closePopup");
-
-const form = document.getElementById("bookingForm");
-
-const usernameInput = document.getElementById("usernameInput");
-const platformSelect = document.getElementById("platformSelect");
-const termsCheck = document.getElementById("termsCheck");
-
 const confirmBtn = document.getElementById("confirmBooking");
+const cancelBtn = document.getElementById("cancelBooking");
+
+const contactInput = document.getElementById("contactName");
+const platformSelect = document.getElementById("contactPlatform");
+const termsCheck = document.getElementById("termsCheck");
 
 
 /* -------------------------- */
-/* OPEN POPUP */
+/* OPEN / CLOSE POPUP */
 /* -------------------------- */
 
 function openBookingPopup(){
 
-popup.style.display = "flex";
+popup.style.display="flex";
 
-usernameInput.value = "";
-
-termsCheck.checked = false;
+contactInput.value="";
+platformSelect.value="Discord";
+termsCheck.checked=false;
 
 }
 
+cancelBtn.onclick = ()=> popup.style.display="none";
 
-/* -------------------------- */
-/* CLOSE POPUP */
-/* -------------------------- */
-
-closePopupBtn.onclick = ()=>{
-
-popup.style.display = "none";
-
+window.onclick = (e)=>{
+if(e.target === popup) popup.style.display="none";
 };
 
 
@@ -44,166 +36,91 @@ popup.style.display = "none";
 /* BOOKING SUBMIT */
 /* -------------------------- */
 
-form.addEventListener("submit", async (e)=>{
+confirmBtn.onclick = async ()=>{
 
-e.preventDefault();
+let user = getUser();
 
-let localUser = getLocalUser();
-
-if(!localUser){
-
-alert("Please login first");
-
+if(!user){
+alert("Login required!");
 return;
-
 }
 
-let username = usernameInput.value.trim();
+let contact = contactInput.value.trim();
+let platform = platformSelect.value;
 
-if(username.length < 2){
-
-alert("Enter a valid username");
-
+if(contact.length<2){
+alert("Enter a valid contact username");
 return;
-
 }
 
 if(!termsCheck.checked){
-
 alert("You must accept the terms");
-
 return;
-
 }
 
-confirmBtn.innerHTML =
-'<i class="fa-solid fa-spinner fa-spin"></i> Processing';
+if(!selectedDate){
+alert("No date selected");
+return;
+}
 
-confirmBtn.disabled = true;
+if(!isBookable(new Date(selectedDate))){
+alert("Date not bookable");
+return;
+}
 
+if(!addBooking(selectedDate,user)){
+alert("You already booked this day");
+return;
+}
 
 
 /* -------------------------- */
-/* SAVE BOOKING */
-/* -------------------------- */
-
-addBooking(selectedDay, localUser);
-
+/* LOAD INDICATOR */
+confirmBtn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Booking...';
+confirmBtn.disabled=true;
 
 
 /* -------------------------- */
-/* SEND WEBHOOK */
-/* -------------------------- */
+/* SEND DISCORD WEBHOOK */
 
-let payload = {
-
+let payload={
 embeds:[{
-
 title:"New Heide Park Booking",
-
 color:16753920,
-
 fields:[
-
-{
-name:"Day",
-value:selectedDay,
-inline:true
-},
-
-{
-name:"Account",
-value:localUser,
-inline:true
-},
-
-{
-name:"Contact Platform",
-value:platformSelect.value,
-inline:true
-},
-
-{
-name:"Contact Username",
-value:username,
-inline:true
-}
-
+{name:"Date",value:selectedDate,inline:true},
+{name:"User",value:user,inline:true},
+{name:"Contact Platform",value:platform,inline:true},
+{name:"Contact Username",value:contact,inline:true}
 ]
-
 }]
-
 };
 
-
-
 try{
-
-await fetch(SETTINGS.webhookURL,{
+await fetch(CONFIG.webhookURL,{
 method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
+headers:{"Content-Type":"application/json"},
 body:JSON.stringify(payload)
 });
-
 }catch(err){
-
-console.log("Webhook error",err);
-
+console.error("Webhook error",err);
 }
-
 
 
 /* -------------------------- */
 /* FINISH */
-/* -------------------------- */
-
 setTimeout(()=>{
 
-popup.style.display = "none";
+confirmBtn.innerHTML='<i class="fa-solid fa-check"></i> Confirm Booking';
+confirmBtn.disabled=false;
 
-confirmBtn.disabled = false;
-
-confirmBtn.innerHTML =
-'<i class="fa-solid fa-check"></i> Confirm Booking';
+popup.style.display="none";
+selectedDate=null;
 
 drawCalendar();
 
+alert("Booking successful!");
+
 },1200);
-
-});
-
-
-
-/* -------------------------- */
-/* PREVENT DOUBLE BOOKINGS */
-/* -------------------------- */
-
-function userAlreadyBooked(date){
-
-let bookings = getBookings();
-
-let user = getLocalUser();
-
-if(!bookings[date]) return false;
-
-return bookings[date].includes(user);
-
-}
-
-
-
-/* -------------------------- */
-/* GLOBAL CLICK CLOSE */
-/* -------------------------- */
-
-window.onclick = function(event){
-
-if(event.target === popup){
-
-popup.style.display = "none";
-
-}
 
 };
