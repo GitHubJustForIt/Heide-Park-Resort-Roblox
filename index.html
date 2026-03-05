@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Heide Park Resort Roblox – Buchung</title>
+<title>Heide Park Resort Roblox Booking</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -19,145 +21,262 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <body>
 
-<div class="background-glow"></div>
+
+
+<!-- LOGIN SCREEN -->
+
+<div id="loginScreen">
+
+<div class="loginBox">
+
+<h2>
+
+<i class="fa-solid fa-ticket"></i>
+
+Heide Park Roblox Booking
+
+</h2>
+
+<p class="loginSubtitle">
+
+Login or create an account to continue
+
+</p>
+
+
+<input id="loginUsername" placeholder="Username">
+
+<input id="loginPassword" type="password" placeholder="Password">
+
+<div class="loginButtons">
+
+<button id="loginBtnMain">
+
+<i class="fa-solid fa-right-to-bracket"></i>
+
+Login
+
+</button>
+
+<button id="registerBtn">
+
+<i class="fa-solid fa-user-plus"></i>
+
+Register
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- MAIN WEBSITE -->
+
+<div id="siteWrapper">
+
+
 
 <header class="topbar">
 
 <div class="logo">
+
 <i class="fa-solid fa-ticket"></i>
-<span>Heide Park Roblox Booking</span>
+
+<span>Heide Park Resort Roblox</span>
+
 </div>
 
-<div class="account">
-<button id="loginBtn">
-<i class="fa-solid fa-user"></i>
-Login
+
+<div class="accountArea">
+
+<span id="accountName"></span>
+
+<button id="logoutBtn">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
 </button>
+
 </div>
 
 </header>
 
+
+
 <section class="hero">
 
 <h1>
+
+<i class="fa-solid fa-calendar-days"></i>
+
 Book your visit
+
 </h1>
 
 <p>
-Reserve your day at the Heide Park Resort Roblox experience
+
+Reserve your park experience day
+
 </p>
 
 </section>
 
 
-<section class="calendar-section">
 
-<div class="calendar-controls">
+<section class="calendarSection">
 
-<button id="prevYear">
+
+<div class="calendarHeader">
+
+<button id="prevMonth">
+
 <i class="fa-solid fa-chevron-left"></i>
+
 </button>
 
-<h2 id="yearDisplay"></h2>
+<h2 id="monthTitle"></h2>
 
-<button id="nextYear">
+<button id="nextMonth">
+
 <i class="fa-solid fa-chevron-right"></i>
+
 </button>
 
 </div>
+
+
+
+<div class="calendarLegend">
+
+<div>
+
+<span class="legend available"></span>
+
+Available
+
+</div>
+
+<div>
+
+<span class="legend pending"></span>
+
+Pending
+
+</div>
+
+<div>
+
+<span class="legend full"></span>
+
+Full
+
+</div>
+
+<div>
+
+<span class="legend disabled"></span>
+
+Unavailable
+
+</div>
+
+</div>
+
 
 
 <canvas id="calendarCanvas"></canvas>
 
+
 </section>
 
 
-<div class="popup" id="bookingPopup">
 
-<div class="popup-content">
+<!-- BOOKING POPUP -->
 
-<div class="popup-header">
+<div id="bookingPopup">
+
+<div class="bookingBox">
 
 <h3>
+
 <i class="fa-solid fa-calendar-check"></i>
-Booking
+
+Book this day
+
 </h3>
 
-<button id="closePopup">
-<i class="fa-solid fa-xmark"></i>
-</button>
 
-</div>
+<label>
+
+<i class="fa-solid fa-hashtag"></i>
+
+Contact Username
+
+</label>
+
+<input id="contactName">
 
 
-<form id="bookingForm">
+<label>
 
-<label>Contact Platform</label>
+<i class="fa-brands fa-discord"></i>
 
-<select id="platformSelect">
+Contact Platform
 
-<option value="discord">Discord</option>
-<option value="tiktok">TikTok</option>
+</label>
+
+<select id="contactPlatform">
+
+<option value="Discord">Discord</option>
+<option value="TikTok">TikTok</option>
 
 </select>
 
-<label>Username</label>
 
-<input type="text" id="usernameInput" required>
-
-
-<div class="terms">
+<div class="termsBox">
 
 <input type="checkbox" id="termsCheck">
 
 <span>
-I accept that bookings cannot be refunded
+
+No refunds accepted
+
 </span>
 
 </div>
 
-<button type="submit" id="confirmBooking">
+
+<button id="confirmBooking">
 
 <i class="fa-solid fa-check"></i>
+
 Confirm Booking
 
 </button>
 
-</form>
 
-</div>
+<button id="cancelBooking">
 
-</div>
+<i class="fa-solid fa-xmark"></i>
 
+Cancel
 
-<div class="login-popup" id="loginPopup">
-
-<div class="login-content">
-
-<h3>
-<i class="fa-solid fa-user"></i>
-Account Login
-</h3>
-
-<input type="text" id="localUsername"
-placeholder="Your username">
-
-<button id="saveAccount">
-Save Account
 </button>
 
-</div>
 
 </div>
 
+</div>
 
-<footer>
 
-<p>
-Heide Park Resort Roblox – Booking System
-</p>
 
-</footer>
+</div>
 
 
 </body>
