@@ -75,7 +75,7 @@ const SETTINGS = {
 
       3: { // March 2026
         //  Sat 7 March
-        7:  { enabled: true,  bookedBy: ["ddd"],                    pendingBy: [] },
+        7:  { enabled: true,  bookedBy: ["ddd", "lol", "haha", "ddddd"],                    pendingBy: [] },
         //  Sun 8 March
         8:  { enabled: true,  bookedBy: ["CoolRider99"],       pendingBy: ["WaitingUser1"] },
         //  Sat 14 March
