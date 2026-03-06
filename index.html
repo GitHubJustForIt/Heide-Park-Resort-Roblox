@@ -70,7 +70,6 @@
         <span class="sh-name">Heide Park <strong>Roblox</strong></span>
       </div>
       <nav class="sh-nav">
-        <a href="#" id="nav-park">The Park</a>
         <a href="#" id="nav-tickets" class="sh-nav-highlight">Book Tickets</a>
         <a href="#" id="nav-golden" style="display:none">✦ Golden Ticket</a>
       </nav>
@@ -112,18 +111,6 @@
     <div class="ticker-tape" id="ticker-inner"></div>
   </div>
 
-  <!-- ZONES (lean: icons + names + one-liners) -->
-  <section class="section" id="gallery-section">
-    <div class="sec-eyebrow">Explore · Heide Park Roblox</div>
-    <h2 class="sec-h2">Our <em>Attractions</em></h2>
-    <div class="zones-grid" id="gallery-grid"></div>
-    <div class="sec-book-pull">
-      <div class="sbp-line"></div>
-      <button class="sbp-btn" id="zones-cta-btn">Ready to visit? Book your tickets ↓</button>
-      <div class="sbp-line"></div>
-    </div>
-  </section>
-
   <!-- GOLDEN TICKET -->
   <section class="section" id="golden-ticket-section" style="display:none">
     <div class="sec-eyebrow">✦ Rare Drop · Only One Exists</div>
@@ -137,7 +124,16 @@
         <div id="gt-date-badge" style="display:none" class="gt-event-badge"></div>
       </div>
       <div class="gt-cta-col">
-        <button id="btn-claim-golden" class="gt-btn" style="display:none">✦ Request Ticket</button>
+        <!-- Competition urgency display -->
+        <div class="gt-live-box" id="gt-live-box">
+          <div class="gt-live-hd">
+            <span class="gt-live-dot"></span>
+            <span id="gt-viewer-count">— players watching</span>
+          </div>
+          <div class="gt-avatars" id="gt-avatars"></div>
+          <div class="gt-live-msg" id="gt-live-msg">Players are competing for this ticket right now</div>
+        </div>
+        <button id="btn-claim-golden" class="gt-btn" style="display:none">✦ Request Ticket Now</button>
         <div id="gt-pending-badge" class="gt-status-badge pending" style="display:none">⏳ Pending approval</div>
         <div id="gt-claimed-badge" class="gt-status-badge claimed" style="display:none"></div>
       </div>
@@ -206,32 +202,35 @@
   </footer>
 </div>
 
-<!-- BOOKING MODAL (multi-step) -->
+<!-- BOOKING MODAL (7-step) -->
 <div id="bk-overlay">
   <div class="bk-panel" id="bk-panel">
     <button class="bk-x" id="bk-x">✕</button>
 
-    <!-- Step 0: Loading queue -->
+    <!-- Step 0: Initial connection -->
     <div class="bk-step active" id="bk-s0">
       <div class="bk-load-wrap">
         <div class="bk-load-icon">🎟</div>
-        <div class="bk-load-title">Checking Availability</div>
+        <div class="bk-load-title">Connecting to Reservation System</div>
         <div class="bk-prog-track"><div class="bk-prog-bar" id="bk-prog"></div></div>
-        <div class="bk-load-msg" id="bk-load-msg">Connecting to reservation system…</div>
-        <div class="bk-chklist" id="bk-chklist">
-          <div class="bkci pending" id="bkci-1"><span></span>Verifying date availability</div>
+        <div class="bk-load-msg" id="bk-load-msg">Establishing secure connection…</div>
+        <div class="bk-chklist">
+          <div class="bkci" id="bkci-1"><span></span>Verifying date availability</div>
           <div class="bkci" id="bkci-2"><span></span>Loading capacity data</div>
           <div class="bkci" id="bkci-3"><span></span>Securing your session</div>
+          <div class="bkci" id="bkci-4"><span></span>Fetching park schedule</div>
         </div>
       </div>
     </div>
 
-    <!-- Step 1: Identity -->
+    <!-- Step 1: Identity + captcha -->
     <div class="bk-step" id="bk-s1">
       <div class="bk-crumb">
-        <span class="bkc bkc-active">1 · Verify</span><span class="bkc-sep">›</span>
-        <span class="bkc">2 · Rules</span><span class="bkc-sep">›</span>
-        <span class="bkc">3 · Review</span>
+        <span class="bkc bkc-active">1·Verify</span><span class="bkc-sep">›</span>
+        <span class="bkc">2·Rules</span><span class="bkc-sep">›</span>
+        <span class="bkc">3·Review</span><span class="bkc-sep">›</span>
+        <span class="bkc">4·Submit</span><span class="bkc-sep">›</span>
+        <span class="bkc">5·Done</span>
       </div>
       <div class="bk-date-card">
         <div class="bkdc-label">Selected Date</div>
@@ -244,7 +243,7 @@
         <input id="bk-uname" type="text" placeholder="Must match your login exactly" autocomplete="off" spellcheck="false"/>
       </div>
       <div class="bk-captcha">
-        <div class="bk-cap-label">Quick security check</div>
+        <div class="bk-cap-label">Security check — solve this:</div>
         <div class="bk-cap-q" id="bk-cap-q">— + — = ?</div>
         <input id="bk-cap-a" type="number" placeholder="Your answer"/>
       </div>
@@ -252,20 +251,22 @@
       <button class="bk-btn-next" id="bk-n1">Continue to Rules →</button>
     </div>
 
-    <!-- Step 2: Rules -->
+    <!-- Step 2: Rules + agree -->
     <div class="bk-step" id="bk-s2">
       <div class="bk-crumb">
-        <span class="bkc bkc-done">1 · Verify ✓</span><span class="bkc-sep">›</span>
-        <span class="bkc bkc-active">2 · Rules</span><span class="bkc-sep">›</span>
-        <span class="bkc">3 · Review</span>
+        <span class="bkc bkc-done">1·Verify ✓</span><span class="bkc-sep">›</span>
+        <span class="bkc bkc-active">2·Rules</span><span class="bkc-sep">›</span>
+        <span class="bkc">3·Review</span><span class="bkc-sep">›</span>
+        <span class="bkc">4·Submit</span><span class="bkc-sep">›</span>
+        <span class="bkc">5·Done</span>
       </div>
-      <div class="bk-rules-title">Park Rules &amp; Terms</div>
+      <div class="bk-rules-title">Park Rules &amp; Booking Terms</div>
       <div class="bk-rules-list">
-        <div class="bk-rule"><div class="bkr-num">01</div><div>Booking requests are <strong>pending</strong> until confirmed by admin. Pending status does not guarantee a spot.</div></div>
+        <div class="bk-rule"><div class="bkr-num">01</div><div>Requests are <strong>pending</strong> until admin-confirmed. Pending ≠ guaranteed spot.</div></div>
         <div class="bk-rule"><div class="bkr-num">02</div><div>Confirmed tickets are <strong>non-refundable</strong> under any circumstance.</div></div>
-        <div class="bk-rule"><div class="bkr-num">03</div><div>Tickets are <strong>non-transferable</strong> and permanently linked to your Roblox username.</div></div>
-        <div class="bk-rule"><div class="bkr-num">04</div><div>Entry is only valid on the <strong>exact booked date</strong>. No exceptions.</div></div>
-        <div class="bk-rule"><div class="bkr-num">05</div><div>Violations of park rules result in <strong>immediate removal</strong> without refund.</div></div>
+        <div class="bk-rule"><div class="bkr-num">03</div><div>Tickets are <strong>non-transferable</strong> — permanently linked to your username.</div></div>
+        <div class="bk-rule"><div class="bkr-num">04</div><div>Entry valid <strong>only on the exact booked date</strong>. No exceptions.</div></div>
+        <div class="bk-rule"><div class="bkr-num">05</div><div>Rule violations = <strong>immediate removal</strong> without refund.</div></div>
       </div>
       <div class="bk-checks">
         <label class="bk-chk"><input type="checkbox" id="cb1"/><span>I understand requests are pending until admin approval</span></label>
@@ -278,12 +279,14 @@
       <div class="bk-btn-row"><button class="bk-btn-back" id="bk-b2">← Back</button><button class="bk-btn-next" id="bk-n2">Review Booking →</button></div>
     </div>
 
-    <!-- Step 3: Summary -->
+    <!-- Step 3: Summary review -->
     <div class="bk-step" id="bk-s3">
       <div class="bk-crumb">
-        <span class="bkc bkc-done">1 · Verify ✓</span><span class="bkc-sep">›</span>
-        <span class="bkc bkc-done">2 · Rules ✓</span><span class="bkc-sep">›</span>
-        <span class="bkc bkc-active">3 · Review</span>
+        <span class="bkc bkc-done">1·Verify ✓</span><span class="bkc-sep">›</span>
+        <span class="bkc bkc-done">2·Rules ✓</span><span class="bkc-sep">›</span>
+        <span class="bkc bkc-active">3·Review</span><span class="bkc-sep">›</span>
+        <span class="bkc">4·Submit</span><span class="bkc-sep">›</span>
+        <span class="bkc">5·Done</span>
       </div>
       <div class="bk-sum-head">Booking Summary</div>
       <div class="bk-sum-card">
@@ -292,31 +295,55 @@
         <div class="bksc-row"><span>Event</span><strong>Heide Park Roblox Weekend</strong></div>
         <div class="bksc-row"><span>Type</span><strong>Standard Entry · 1 Guest</strong></div>
         <div class="bksc-row"><span>Status after submit</span><strong class="bksc-status">⏳ Pending Approval</strong></div>
-        <div class="bksc-note">Once submitted, the park admin will review and confirm your spot. You will be notified via Discord.</div>
+        <div class="bksc-note">Once submitted, the admin will review and confirm your spot. You will be notified on Discord.</div>
       </div>
       <div class="bk-err" id="bk-e3" style="display:none"></div>
       <div class="bk-btn-row"><button class="bk-btn-back" id="bk-b3">← Back</button><button class="bk-btn-submit" id="bk-submit">Submit Booking Request</button></div>
     </div>
 
-    <!-- Step 4: Sending -->
+    <!-- Step 4: Transmitting (new deeper loading) -->
     <div class="bk-step" id="bk-s4">
-      <div class="bk-sending">
+      <div class="bk-load-wrap">
         <div class="bk-send-ring"></div>
-        <div class="bk-send-title">Submitting your request…</div>
-        <div class="bk-send-msg" id="bk-send-msg">Sending to reservation system</div>
+        <div class="bk-load-title" style="margin-top:16px">Transmitting your request…</div>
+        <div class="bk-prog-track" style="margin-top:14px"><div class="bk-prog-bar" id="bk-prog2"></div></div>
+        <div class="bk-load-msg" id="bk-send-msg">Sending to reservation system…</div>
+        <div class="bk-chklist">
+          <div class="bkci" id="bksci-1"><span></span>Encrypting booking data</div>
+          <div class="bkci" id="bksci-2"><span></span>Registering your request</div>
+          <div class="bkci" id="bksci-3"><span></span>Notifying park admin</div>
+          <div class="bkci" id="bksci-4"><span></span>Generating confirmation</div>
+        </div>
       </div>
     </div>
 
-    <!-- Step 5: Done -->
+    <!-- Step 5: Final verification hold (realistic wait) -->
     <div class="bk-step" id="bk-s5">
+      <div class="bk-load-wrap">
+        <div class="bk-verify-icon">🔐</div>
+        <div class="bk-load-title">Final Verification</div>
+        <div class="bk-load-msg" id="bk-verify-msg">Running final checks on your booking…</div>
+        <div class="bk-verify-details">
+          <div class="bkvd-row" id="bkvd-1"><span class="bkvd-dot spinning"></span><span>Identity confirmed</span><span class="bkvd-ok" id="bkvd-ok1"></span></div>
+          <div class="bkvd-row" id="bkvd-2"><span class="bkvd-dot"></span><span>Date availability locked</span><span class="bkvd-ok" id="bkvd-ok2"></span></div>
+          <div class="bkvd-row" id="bkvd-3"><span class="bkvd-dot"></span><span>Rules acceptance recorded</span><span class="bkvd-ok" id="bkvd-ok3"></span></div>
+          <div class="bkvd-row" id="bkvd-4"><span class="bkvd-dot"></span><span>Request logged in system</span><span class="bkvd-ok" id="bkvd-ok4"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 6: Done -->
+    <div class="bk-step" id="bk-s6">
       <div class="bk-done">
         <div class="bk-done-icon">⏳</div>
         <div class="bk-done-title">Request Submitted</div>
         <div class="bk-done-body" id="bk-done-body">Your booking request is pending admin review.</div>
         <div class="bk-done-ref" id="bk-done-ref"></div>
+        <div class="bk-done-next">Watch Discord for your confirmation. The admin reviews all requests manually.</div>
         <button class="bk-done-close" id="bk-done-close">Close</button>
       </div>
     </div>
+
   </div>
 </div>
 
