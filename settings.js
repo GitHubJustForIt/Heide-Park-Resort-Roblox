@@ -39,9 +39,9 @@ const SETTINGS = {
   //  label:       A short display name for the event, e.g. "VIP Saturday"
   // ──────────────────────────────────────────────────────────
   goldenTicket: {
-    enabled:     true,
+    enabled:     false,
     claimedBy:   "",              // set to a username once you confirm it
-    pendingBy:   "eokkdod",              // auto-filled by the system when someone requests — you clear this after deciding
+    pendingBy:   "",              // auto-filled by the system when someone requests — you clear this after deciding
     bookingDate: "2026-03-22",    // YYYY-MM-DD
     label:       "VIP Spring Saturday",
   },
