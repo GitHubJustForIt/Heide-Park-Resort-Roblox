@@ -40,7 +40,7 @@ const SETTINGS = {
   // ──────────────────────────────────────────────────────────
   goldenTicket: {
     enabled:     true,
-    claimedBy:   "",              // set to a username once you confirm it
+    claimedBy:   "ddd",              // set to a username once you confirm it
     pendingBy:   "",              // auto-filled by the system when someone requests — you clear this after deciding
     bookingDate: "2026-03-22",    // YYYY-MM-DD
     label:       "VIP Spring Saturday",
@@ -75,7 +75,7 @@ const SETTINGS = {
 
       3: { // March 2026
         //  Sat 7 March
-        7:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        7:  { enabled: true,  bookedBy: ["ddd"],                    pendingBy: [] },
         //  Sun 8 March
         8:  { enabled: true,  bookedBy: ["CoolRider99"],       pendingBy: ["WaitingUser1"] },
         //  Sat 14 March
