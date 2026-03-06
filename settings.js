@@ -40,8 +40,8 @@ const SETTINGS = {
   // ──────────────────────────────────────────────────────────
   goldenTicket: {
     enabled:     true,
-    claimedBy:   "eokkdod",              // set to a username once you confirm it
-    pendingBy:   "",              // auto-filled by the system when someone requests — you clear this after deciding
+    claimedBy:   "",              // set to a username once you confirm it
+    pendingBy:   "eokkdod",              // auto-filled by the system when someone requests — you clear this after deciding
     bookingDate: "2026-03-22",    // YYYY-MM-DD
     label:       "VIP Spring Saturday",
   },
@@ -77,11 +77,11 @@ const SETTINGS = {
         //  Sat 7 March
         7:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
         //  Sun 8 March
-        8:  { enabled: true,  bookedBy: ["eokkdod"],       pendingBy: ["WaitingUser1"] },
+        8:  { enabled: true,  bookedBy: [],       pendingBy: ["eokkdod"] },
         //  Sat 14 March
         14: { enabled: true,  bookedBy: [],                    pendingBy: [] },
         //  Sun 15 March
-        15: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        15: { enabled: true,  bookedBy: [],                    pendingBy: ["eokkdod"] },
         //  Sat 21 March
         21: { enabled: true,  bookedBy: [],                    pendingBy: [] },
         //  Sun 22 March  ← Golden Ticket day
