@@ -8,32 +8,30 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-<!-- ============================================================
+<!-- ══════════════════════════════════════════════════════════
      LOADING SCREEN
-     ============================================================ -->
+══════════════════════════════════════════════════════════ -->
 <div id="loading-screen">
   <div class="loader-ring"></div>
   <div class="loader-logo">HEIDE PARK ROBLOX</div>
   <div class="loader-sub">Loading Experience…</div>
 </div>
 
-<!-- ============================================================
+<!-- ══════════════════════════════════════════════════════════
      LOGIN OVERLAY
-     ============================================================ -->
+══════════════════════════════════════════════════════════ -->
 <div id="login-overlay">
   <canvas id="login-particles"></canvas>
   <div class="login-deco d1"></div>
   <div class="login-deco d2"></div>
-
   <div class="login-card">
     <div class="login-badge">🎢 Welcome Portal</div>
     <div class="login-title">HEIDE PARK<br>ROBLOX</div>
     <div class="login-subtitle">Sign in to access the official ticket reservation system for the most epic Roblox theme park experience.</div>
-
     <form id="login-form" novalidate>
       <div class="form-group">
         <label for="login-username">Roblox Username</label>
@@ -53,12 +51,12 @@
   </div>
 </div>
 
-<!-- ============================================================
+<!-- ══════════════════════════════════════════════════════════
      MAIN SITE
-     ============================================================ -->
+══════════════════════════════════════════════════════════ -->
 <div id="main-site">
 
-  <!-- NAVBAR -->
+  <!-- NAVBAR ──────────────────────────────────────────────── -->
   <nav class="navbar">
     <div class="navbar-brand">
       <div class="navbar-icon">🎢</div>
@@ -66,24 +64,19 @@
     </div>
     <div class="navbar-user">
       <div class="navbar-avatar" id="navbar-avatar-letter">?</div>
-      <span id="navbar-username" style="display:none;"></span>
-      <span id="navbar-username-label" style="font-size:0.85rem;color:var(--clr-muted);">Guest</span>
+      <span id="navbar-username-label" style="font-size:.85rem;color:var(--muted)">Guest</span>
       <button class="navbar-logout" id="btn-logout">Logout</button>
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO ────────────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-lines"></div>
     <div class="hero-content">
       <div class="hero-eyebrow"><span></span>Official Ticket Reservation</div>
-      <h1 class="hero-title">
-        BOOK YOUR<br><span class="accent">ADVENTURE</span>
-      </h1>
-      <p class="hero-sub">
-        Secure your spot at Heide Park Roblox — the most immersive theme park experience in the Roblox universe. Weekend events. Limited slots. No second chances.
-      </p>
+      <h1 class="hero-title">BOOK YOUR<br><span class="accent">ADVENTURE</span></h1>
+      <p class="hero-sub">Secure your spot at Heide Park Roblox — the most immersive theme park experience in the Roblox universe. Weekend events. Limited slots. No second chances.</p>
       <div class="hero-cta">
         <button class="btn-primary" id="hero-book-btn">BOOK A TICKET</button>
         <button class="btn-ghost"   id="hero-explore-btn">EXPLORE THE PARK</button>
@@ -96,12 +89,12 @@
     </div>
   </section>
 
-  <!-- NEWS TICKER -->
+  <!-- NEWS TICKER ─────────────────────────────────────────── -->
   <div class="news-ticker">
     <div class="ticker-inner" id="ticker-inner"></div>
   </div>
 
-  <!-- GALLERY SECTION -->
+  <!-- PARK GALLERY ────────────────────────────────────────── -->
   <section class="section" id="gallery-section">
     <div class="section-header">
       <div class="section-eyebrow">Park Preview</div>
@@ -110,7 +103,16 @@
     <div class="gallery-grid" id="gallery-grid"></div>
   </section>
 
-  <!-- BOOKING HINTS SECTION -->
+  <!-- DIVIDER STATS BAND ──────────────────────────────────── -->
+  <div class="divider-band">
+    <div class="divider-stat"><div class="divider-stat-num">500+</div><div class="divider-stat-lbl">Active Members</div></div>
+    <div class="divider-stat"><div class="divider-stat-num">3+</div><div class="divider-stat-lbl">Years Running</div></div>
+    <div class="divider-stat"><div class="divider-stat-num">15+</div><div class="divider-stat-lbl">Themed Zones</div></div>
+    <div class="divider-stat"><div class="divider-stat-num">4</div><div class="divider-stat-lbl">Max Spots/Day</div></div>
+    <div class="divider-stat"><div class="divider-stat-num">3</div><div class="divider-stat-lbl">Golden Tickets Ever</div></div>
+  </div>
+
+  <!-- BOOKING HINTS ───────────────────────────────────────── -->
   <section class="section" id="hints-section">
     <div class="section-header">
       <div class="section-eyebrow">Before You Book</div>
@@ -119,67 +121,66 @@
     <div class="hints-grid" id="hints-grid"></div>
   </section>
 
-  <!-- TWO-COLUMN: Attractions + Tips -->
+  <!-- ATTRACTIONS + TIPS ──────────────────────────────────── -->
   <section class="section" id="extra-section">
     <div class="grid-2">
-
-      <!-- Next Attractions -->
       <div>
-        <div class="section-header" style="margin-bottom:28px;">
+        <div class="section-header" style="margin-bottom:26px">
           <div class="section-eyebrow">Coming Soon</div>
-          <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.4rem);">NEXT <span class="accent">ATTRACTIONS</span></h2>
+          <h2 class="section-title" style="font-size:clamp(1.65rem,3vw,2.5rem)">NEXT <span class="accent">ATTRACTIONS</span></h2>
         </div>
         <div class="attractions-list" id="attractions-list"></div>
       </div>
-
-      <!-- Visitor Tips -->
       <div>
-        <div class="section-header" style="margin-bottom:28px;">
+        <div class="section-header" style="margin-bottom:26px">
           <div class="section-eyebrow">Insider Knowledge</div>
-          <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.4rem);">VISITOR <span class="accent">TIPS</span></h2>
+          <h2 class="section-title" style="font-size:clamp(1.65rem,3vw,2.5rem)">VISITOR <span class="accent">TIPS</span></h2>
         </div>
         <div class="tips-list" id="tips-list"></div>
       </div>
-
     </div>
   </section>
 
-  <!-- FUN FACTS -->
+  <!-- FUN FACTS ───────────────────────────────────────────── -->
   <section class="section" id="facts-section">
     <div class="section-header">
       <div class="section-eyebrow">Did You Know?</div>
       <h2 class="section-title">PARK <span class="accent">FACTS</span></h2>
     </div>
     <div class="facts-carousel">
-      <div class="fact-text" id="fact-text"></div>
+      <div class="fact-text" id="fact-text">"Loading facts…"</div>
       <div class="facts-dots" id="facts-dots"></div>
     </div>
   </section>
 
-  <!-- GOLDEN TICKET -->
-  <section class="section golden-ticket-section" id="golden-ticket-section">
-    <div class="section-header" style="text-align:center;">
-      <div class="section-eyebrow" style="justify-content:center;">Ultra Rare</div>
-      <h2 class="section-title" style="text-align:center;">THE <span style="background:linear-gradient(135deg,#ffd700,#ffe566);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">GOLDEN TICKET</span></h2>
+  <!-- ══════════════════════════════════════════════════════
+       GOLDEN TICKET  — always in DOM, JS shows/hides
+  ══════════════════════════════════════════════════════ -->
+  <section class="section" id="golden-ticket-section" style="display:none">
+    <div class="section-header" style="text-align:center">
+      <div class="section-eyebrow" style="justify-content:center">✦ Ultra Rare ✦</div>
+      <h2 class="section-title" style="text-align:center">THE
+        <span style="background:linear-gradient(135deg,#ffd700,#ffe566);-webkit-background-clip:text;-webkit-text-fill-color:transparent">GOLDEN TICKET</span>
+      </h2>
     </div>
     <div class="golden-ticket-wrapper">
       <div class="golden-ticket-card" id="golden-ticket-card">
         <div class="gt-badge">✦ Legendary Item ✦</div>
-        <div class="gt-icon-main">🏆</div>
+        <span class="gt-icon-main">🏆</span>
         <div class="gt-title">GOLDEN TICKET</div>
-        <div class="gt-sub">One of the rarest items in Heide Park Roblox history. Only one person may hold this ticket. It grants exclusive VIP access to a special event day. Once claimed — it is gone forever.</div>
-        <div class="gt-date-badge" id="gt-date-badge" style="display:none;"></div>
-        <div>
-          <button class="btn-claim-golden" id="btn-claim-golden" style="display:none;">
+        <p class="gt-sub">One of the rarest items in Heide Park Roblox history. Only one person may ever hold this ticket. It grants exclusive VIP access to a special event day. Once claimed — it is gone forever.</p>
+        <div id="gt-date-badge" class="gt-date-badge" style="display:none"></div>
+        <div style="margin-top:8px">
+          <button class="btn-claim-golden" id="btn-claim-golden" style="display:none">
             <span>✦</span> CLAIM GOLDEN TICKET <span>✦</span>
           </button>
-          <div class="gt-claimed-badge" id="gt-claimed-badge" style="display:none;"></div>
+          <div class="gt-claimed-badge" id="gt-claimed-badge" style="display:none"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CALENDAR SECTION -->
+  <!-- CALENDAR ────────────────────────────────────────────── -->
   <section class="section" id="calendar-section">
     <div class="section-header">
       <div class="section-eyebrow">Reserve Your Spot</div>
@@ -203,23 +204,29 @@
         <div class="legend-item"><div class="legend-dot booked"></div>Partially Booked</div>
         <div class="legend-item"><div class="legend-dot soldout"></div>Sold Out</div>
         <div class="legend-item"><div class="legend-dot yours"></div>Your Booking</div>
-        <div class="legend-item"><div class="legend-dot past"></div>Past / Unavailable</div>
+        <div class="legend-item"><div class="legend-dot past"></div>Unavailable</div>
+        <div class="legend-item"><div class="legend-dot golden"></div>✦ Golden Day</div>
       </div>
 
+      <!-- WEEKDAY HEADER — correct Sun-Sat order -->
       <div class="calendar-weekdays">
         <div class="cal-weekday">SUN</div>
-        <div class="cal-weekday weekend">SAT</div>
         <div class="cal-weekday">MON</div>
         <div class="cal-weekday">TUE</div>
         <div class="cal-weekday">WED</div>
         <div class="cal-weekday">THU</div>
         <div class="cal-weekday weekend">FRI</div>
+        <div class="cal-weekday weekend">SAT</div>
       </div>
-      <div class="calendar-grid" id="calendar-grid"></div>
+
+      <!-- Calendar cells rendered by JS -->
+      <div class="calendar-grid" id="calendar-grid">
+        <!-- populated by renderCalendar() -->
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- FOOTER ──────────────────────────────────────────────── -->
   <footer>
     <div class="footer-brand">🎢 HEIDE PARK ROBLOX</div>
     <div class="footer-copy">© 2025 Heide Park Roblox. All rights reserved. Not affiliated with the real Heide Park.</div>
@@ -227,28 +234,27 @@
 
 </div><!-- /#main-site -->
 
-<!-- ============================================================
+<!-- ══════════════════════════════════════════════════════════
      BOOKING MODAL
-     ============================================================ -->
+══════════════════════════════════════════════════════════ -->
 <div id="booking-modal" class="modal-backdrop">
   <div class="booking-panel">
 
-    <!-- Loading -->
+    <!-- Loading phase -->
     <div id="modal-loading" class="modal-loading">
       <div class="modal-loading-ring"></div>
       <div class="modal-loading-text">Connecting to reservation system…</div>
       <div class="modal-loading-sub">Please wait while we load your booking</div>
     </div>
 
-    <!-- Form -->
+    <!-- Confirm form phase -->
     <div id="modal-form" class="modal-form">
       <div class="booking-date-badge">
         <span>🎟</span>
         <span id="booking-date-label">Loading…</span>
       </div>
-
       <div class="modal-title">CONFIRM BOOKING</div>
-      <div class="modal-sub">Please verify your identity and accept the rules below to secure your ticket.</div>
+      <div class="modal-sub">Verify your identity and accept all rules to lock in your spot.</div>
 
       <div class="booking-spots">
         <div class="spots-label" id="booking-spots-label">Checking spots…</div>
@@ -256,35 +262,32 @@
       </div>
 
       <form id="booking-form-el" novalidate>
-
         <div class="form-group">
           <label for="booking-confirm-username">Confirm Your Roblox Username</label>
           <input type="text" id="booking-confirm-username" placeholder="Re-enter your username" autocomplete="off" />
         </div>
 
-        <!-- CAPTCHA -->
         <div class="captcha-box">
-          <label>Prove you're not a robot</label>
+          <label>Prove you are not a robot</label>
           <div class="captcha-q" id="captcha-question">What is 0 + 0?</div>
           <input type="number" id="captcha-input" placeholder="Your answer" />
         </div>
 
-        <!-- Rules -->
         <div class="modal-rules">
           <h4>⚠ Booking Rules</h4>
           <ul>
             <li>Tickets are strictly non-refundable under all circumstances.</li>
             <li>Tickets are non-transferable and bound to your Roblox username.</li>
-            <li>Entry is only permitted on the exact date shown on your ticket.</li>
-            <li>Violations of park rules result in permanent removal without refund.</li>
-            <li>The park management reserves the right to cancel events at any time.</li>
+            <li>Entry is only permitted on the exact booked date.</li>
+            <li>Violations of park rules result in immediate removal without refund.</li>
+            <li>Management reserves the right to cancel events at any time.</li>
           </ul>
         </div>
 
         <div class="form-checks">
           <div class="form-check">
             <input type="checkbox" id="confirm-cb-1" />
-            <label for="confirm-cb-1">I understand that all sales are final — no refunds.</label>
+            <label for="confirm-cb-1">I understand all sales are final — no refunds.</label>
           </div>
           <div class="form-check">
             <input type="checkbox" id="confirm-cb-2" />
@@ -304,7 +307,7 @@
           </div>
         </div>
 
-        <div id="booking-error" style="display:none;padding:10px 14px;background:rgba(255,59,59,0.12);border:1px solid rgba(255,59,59,0.3);border-radius:8px;color:#ff3b3b;font-size:0.84rem;margin-bottom:16px;"></div>
+        <div id="booking-error" style="display:none;padding:10px 13px;background:rgba(255,59,59,.12);border:1px solid rgba(255,59,59,.3);border-radius:8px;color:#ff3b3b;font-size:.82rem;margin-bottom:14px"></div>
 
         <button type="submit" class="btn-book" id="btn-book">CONFIRM BOOKING</button>
         <button type="button" class="btn-cancel" id="btn-cancel-booking">Cancel</button>
@@ -314,64 +317,21 @@
   </div>
 </div>
 
-<!-- ============================================================
+<!-- ══════════════════════════════════════════════════════════
      SUCCESS OVERLAY
-     ============================================================ -->
+══════════════════════════════════════════════════════════ -->
 <div id="success-overlay" class="success-overlay">
   <div class="success-card">
     <div class="success-check">✓</div>
     <div class="success-title" id="success-title">BOOKED!</div>
-    <div class="success-sub" id="success-sub">Your ticket has been reserved.</div>
+    <div class="success-sub"   id="success-sub">Your ticket has been reserved.</div>
     <button class="btn-close-success" id="btn-close-success">CLOSE</button>
   </div>
 </div>
 
-<!-- Load settings first, then app logic -->
+<!-- Scripts: settings first, then app logic -->
 <script src="settings.js"></script>
 <script src="script.js"></script>
-
-<!-- Inline boot patch (runs after both scripts) -->
-<script>
-  // Patch navbar after login
-  const _origLogin = document.getElementById('login-form').onsubmit;
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('login-form').addEventListener('submit', () => {
-      setTimeout(() => {
-        const u = document.getElementById('login-username').value.trim();
-        const lbl = document.getElementById('navbar-username-label');
-        if (lbl && u) lbl.textContent = u;
-      }, 100);
-    });
-
-    // Also build visitor tips (was missing call in script.js boot)
-    if (typeof buildTips === 'function') buildTips();
-    // Build tips safely after DOM
-    const container = document.getElementById('tips-list');
-    if (container && window.SETTINGS) {
-      const tips = SETTINGS.visitorTips || [];
-      container.innerHTML = tips.map((t, i) =>
-        `<div class="tip-item">
-          <div class="tip-num">0${i+1}</div>
-          <div class="tip-text">${t}</div>
-        </div>`
-      ).join('');
-    }
-
-    // Fix calendar weekday order (Sun, Mon...Sat)
-    const wdRow = document.querySelector('.calendar-weekdays');
-    if (wdRow) {
-      wdRow.innerHTML = `
-        <div class="cal-weekday">SUN</div>
-        <div class="cal-weekday">MON</div>
-        <div class="cal-weekday">TUE</div>
-        <div class="cal-weekday">WED</div>
-        <div class="cal-weekday">THU</div>
-        <div class="cal-weekday weekend">FRI</div>
-        <div class="cal-weekday weekend">SAT</div>
-      `;
-    }
-  });
-</script>
 
 </body>
 </html>
