@@ -32,7 +32,7 @@ const SETTINGS = {
   //  If bookingDate is null, golden ticket holder gets VIP entry any day
   // ----------------------------------------------------------
   goldenTicket: {
-    enabled: true,
+    enabled: false,
     claimedBy: "",              // e.g. "PlayerXYZ" — leave empty if not yet claimed
     bookingDate: "2025-07-19",  // The day the golden ticket is valid for (YYYY-MM-DD)
     label: "Golden Saturday",   // Display name shown on the ticket
