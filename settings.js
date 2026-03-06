@@ -11,7 +11,7 @@ const SETTINGS = {
   // ──────────────────────────────────────────────────────────
   park: {
     name:              "Heide Park Roblox",
-    tagline:           "The Ultimate Roblox Theme Park Experience",
+    tagline:           "THE Roblox Theme Park",
     maxBookingsPerDay: 4,     // confirmed spots per day (PENDING does not count toward this)
     bookingWindowDays: 14,    // how many days ahead users may request a booking
   },
@@ -77,11 +77,11 @@ const SETTINGS = {
         //  Sat 7 March
         7:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
         //  Sun 8 March
-        8:  { enabled: true,  bookedBy: [],       pendingBy: ["eokkdod"] },
+        8:  { enabled: true,  bookedBy: [],       pendingBy: [] },
         //  Sat 14 March
         14: { enabled: true,  bookedBy: [],                    pendingBy: [] },
         //  Sun 15 March
-        15: { enabled: true,  bookedBy: [],                    pendingBy: ["eokkdod"] },
+        15: { enabled: true,  bookedBy: [],                    pendingBy: [] },
         //  Sat 21 March
         21: { enabled: true,  bookedBy: [],                    pendingBy: [] },
         //  Sun 22 March  ← Golden Ticket day
@@ -147,14 +147,11 @@ const SETTINGS = {
   //  Add, remove, or edit freely.
   // ──────────────────────────────────────────────────────────
   funFacts: [
-    "Heide Park Roblox was founded in 2022 and now has over 500 active members!",
-    "Our most popular attraction gets visited over 1,000 times per event day.",
-    "Every weekend event is planned months in advance with fully custom builds.",
+    "Heide Park Roblox was founded in 2026 and now has over 100 active members!",
+    "Our most popular attraction gets visited over 200 times per event day.",
     "The park record for most visitors in one day stands at 42 simultaneous players!",
-    "We have over 15 unique themed zones spread across our massive map.",
     "Our build team has collectively spent over 10,000 hours creating the park.",
     "Golden Tickets have only ever been issued 3 times in park history.",
-    "Every weekend event features live DJ music broadcast in the central plaza.",
     "The park map is larger than 10 full Roblox baseplate areas combined.",
   ],
 
@@ -162,30 +159,21 @@ const SETTINGS = {
   //  PARK NEWS TICKER
   // ──────────────────────────────────────────────────────────
   parkNews: [
-    { date: "2026-03-01", text: "Spring season officially kicks off March 7th — book your spot now!" },
-    { date: "2026-02-20", text: "VIP Spring Saturday Golden Ticket is now available — claim it before it's gone!" },
-    { date: "2026-02-10", text: "New roller coaster zone confirmed for Summer 2026." },
-    { date: "2026-01-28", text: "Weekend event capacity stays at 4 confirmed guests per session." },
+      { date: "2026-03-06", text: "Heide Park Roblox got released!" },
   ],
 
   // ──────────────────────────────────────────────────────────
   //  VISITOR TIPS
   // ──────────────────────────────────────────────────────────
   visitorTips: [
-    "Join our Discord server to get notified the moment new tickets drop!",
-    "Book early — weekend slots sell out within hours of opening.",
-    "Arrive in the Roblox server 5 minutes early for the best spawn spots.",
-    "Always follow park rules — violations result in removal without refund.",
-    "Golden Ticket holders use the dedicated VIP entrance on the east side.",
+    "Book fast, tickets are sold out faster than you can blink!",
   ],
 
   // ──────────────────────────────────────────────────────────
   //  NEXT ATTRACTIONS  (shown on homepage)
   // ──────────────────────────────────────────────────────────
   nextAttractions: [
-    { name: "Thunder Mountain XL",    eta: "Summer 2026",    icon: "⚡" },
-    { name: "Haunted Mansion Reboot", eta: "October 2026",   icon: "👻" },
-    { name: "Winter World Zone",      eta: "December 2026",  icon: "❄️" },
+    { name: "Alpenflitz",    eta: "Summer 2026",    icon: "⚡" },
   ],
 
 };
