@@ -1,369 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Heide Park Roblox — Ticket Reservation</title>
-  <meta name="description" content="Book your official Heide Park Roblox event ticket. Limited spots every weekend." />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Heide Park Roblox — Tickets &amp; Events</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bebas+Neue&family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════
-     LOADING SCREEN
-═══════════════════════════════════════════ -->
-<div id="loading-screen">
-  <div class="loader-ring"></div>
-  <div class="loader-logo">HEIDE PARK ROBLOX</div>
-  <div class="loader-sub">Preparing your experience…</div>
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="pl-logo">HEIDE PARK <strong>ROBLOX</strong></div>
+  <div class="pl-bar"><div class="pl-fill" id="pl-fill"></div></div>
+  <div class="pl-msg" id="pl-msg">Initialising…</div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     LOGIN OVERLAY
-═══════════════════════════════════════════ -->
-<div id="login-overlay">
-  <canvas id="login-particles"></canvas>
-  <div class="login-deco d1"></div>
-  <div class="login-deco d2"></div>
-
-  <div class="login-card">
-    <div class="login-park-badge">🎢 Official Portal</div>
-    <div class="login-title">HEIDE PARK<br>ROBLOX</div>
-    <div class="login-subtitle">Sign in to access the exclusive ticket reservation system for the #1 Roblox theme park experience.</div>
-
-    <form id="login-form" novalidate>
-      <div class="form-group">
-        <label for="login-username">Roblox Username</label>
-        <input type="text" id="login-username" placeholder="Your exact Roblox username" autocomplete="off" />
+<!-- LOGIN -->
+<div id="login-screen">
+  <canvas id="lc"></canvas>
+  <div class="ls-left">
+    <div class="lsl-content">
+      <div class="lsl-logo">🎢</div>
+      <div class="lsl-name">HEIDE PARK<br><span>ROBLOX</span></div>
+      <div class="lsl-tagline">The #1 Roblox Theme Park</div>
+      <div class="lsl-chips">
+        <span>🎢 Thunder Zone</span><span>🌊 Aqua World</span>
+        <span>👻 Haunted Hollow</span><span>🚀 Space Launch</span>
       </div>
-      <div class="form-group">
-        <label for="login-age">Your Age</label>
-        <input type="number" id="login-age" placeholder="Enter your age" min="5" max="99" />
-      </div>
-      <div class="form-check">
-        <input type="checkbox" id="login-terms" />
-        <label for="login-terms">I accept the <a href="#">Terms of Service</a> and <a href="#">Park Rules</a></label>
-      </div>
-      <button type="submit" class="btn-login">ENTER THE PARK →</button>
-      <div id="login-error" class="login-error"></div>
-    </form>
+    </div>
+    <div class="lsl-footer">2026 Season · Weekends · Limited Spots</div>
+  </div>
+  <div class="ls-right">
+    <div class="lsr-inner">
+      <div class="lsr-tag">Ticket Reservation Portal</div>
+      <h2 class="lsr-title">Sign in to Book</h2>
+      <p class="lsr-sub">Enter your Roblox username to access the booking system and request a spot at our weekend events.</p>
+      <form id="login-form" novalidate>
+        <div class="lf-field">
+          <label for="l-user">Roblox Username</label>
+          <input id="l-user" type="text" placeholder="Exact username, case-sensitive" autocomplete="off" spellcheck="false"/>
+        </div>
+        <div class="lf-field">
+          <label for="l-age">Age</label>
+          <input id="l-age" type="number" placeholder="Your age" min="5" max="99"/>
+        </div>
+        <label class="lf-check-row">
+          <input type="checkbox" id="l-terms"/>
+          <span>I accept the <a href="#">Terms of Service</a> and <a href="#">Park Rules</a></span>
+        </label>
+        <button type="submit" class="lf-submit">Access Booking System →</button>
+        <div id="login-error" class="lf-error"></div>
+      </form>
+      <div class="lf-warn">⚠ Weekend slots are limited and sell out quickly.</div>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     MAIN SITE
-═══════════════════════════════════════════ -->
-<div id="main-site">
+<!-- MAIN SITE -->
+<div id="site">
 
-  <!-- NAVBAR ──────────────────────────── -->
-  <nav class="navbar">
-    <div class="navbar-brand">
-      <div class="navbar-logo">🎢</div>
-      <div class="navbar-name">HEIDE PARK ROBLOX</div>
+  <!-- SITE HEADER (real park nav) -->
+  <header class="site-header" id="site-header">
+    <div class="sh-wrap">
+      <div class="sh-brand">
+        <span class="sh-icon">🎢</span>
+        <span class="sh-name">Heide Park <strong>Roblox</strong></span>
+      </div>
+      <nav class="sh-nav">
+        <a href="#" id="nav-park">The Park</a>
+        <a href="#" id="nav-tickets" class="sh-nav-highlight">Book Tickets</a>
+        <a href="#" id="nav-golden" style="display:none">✦ Golden Ticket</a>
+      </nav>
+      <div class="sh-user-area">
+        <div class="sh-avatar" id="sh-avatar">?</div>
+        <div class="sh-uinfo">
+          <div id="sh-uname" class="sh-uname">Guest</div>
+          <div id="sh-pending" class="sh-pending-dot" style="display:none">⏳ Pending</div>
+        </div>
+        <button id="btn-logout" class="sh-logout">Sign out</button>
+      </div>
     </div>
-    <div class="navbar-user">
-      <div class="navbar-avatar" id="navbar-avatar-letter">?</div>
-      <span id="navbar-username-label" style="font-size:.83rem;color:var(--muted-lt)">Guest</span>
-      <!-- pending badge injected by JS if needed -->
-      <button class="navbar-logout" id="btn-logout">Logout</button>
-    </div>
-  </nav>
+  </header>
 
-  <!-- ═══════════════════════════════════
-       HERO
-  ═══════════════════════════════════ -->
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
-    <div class="hero-stripes"></div>
-    <div class="hero-glow-line"></div>
-    <div class="hero-glow-line2"></div>
-
+    <div class="hero-fade-bottom"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow">
-        <span class="hero-eyebrow-line"></span>
-        Official Ticket Reservation · 2026 Season
-      </div>
-      <h1 class="hero-title">
-        <span class="line1">BOOK YOUR</span>
-        <span class="line2">ADVENTURE</span>
-      </h1>
-      <p class="hero-sub">
-        Secure your spot at Heide Park Roblox — the most immersive theme park in the entire Roblox universe.
-        Weekend events. Limited slots. Request your ticket today.
-      </p>
-      <div class="hero-cta">
-        <button class="btn-primary" id="hero-book-btn">🎟 REQUEST A TICKET</button>
-        <button class="btn-ghost"   id="hero-explore-btn">EXPLORE THE PARK</button>
+      <div class="hero-pill">🗓 2026 Season · Now Open for Booking</div>
+      <h1 class="hero-h1">Welcome to<br><em>Heide Park Roblox</em></h1>
+      <p class="hero-desc">The most immersive Roblox theme park — 15+ zones, exclusive weekend events, strictly limited tickets.</p>
+      <div class="hero-actions">
+        <button class="ha-primary" id="hero-book-btn">
+          <span class="hap-icon">🎟</span>
+          <span class="hap-lines"><strong>Book a Ticket</strong><small>View available dates ↓</small></span>
+        </button>
+        <button class="ha-ghost" id="hero-park-btn">Explore the Park</button>
       </div>
     </div>
-
-    <!-- Decorative zone cards — right side -->
-    <div class="hero-visual">
-      <div class="hero-card"><div class="hero-card-icon">🎢</div><div class="hero-card-name">Thunder Zone</div><div class="hero-card-tag">EXTREME</div></div>
-      <div class="hero-card"><div class="hero-card-icon">🌊</div><div class="hero-card-name">Aqua World</div><div class="hero-card-tag">WATER</div></div>
-      <div class="hero-card"><div class="hero-card-icon">👻</div><div class="hero-card-name">Haunted Hollow</div><div class="hero-card-tag">HORROR</div></div>
-    </div>
-
-    <div class="hero-stats">
-      <div class="stat-item"><div class="stat-num">500+</div><div class="stat-lbl">Members</div></div>
-      <div class="stat-item"><div class="stat-num">4</div><div class="stat-lbl">Max Spots</div></div>
-      <div class="stat-item"><div class="stat-num">15+</div><div class="stat-lbl">Zones</div></div>
-      <div class="stat-item"><div class="stat-num">3+</div><div class="stat-lbl">Years</div></div>
+    <div class="hero-live-bar">
+      <span class="hlb-dot"></span>
+      <span id="hero-live-text">Weekend dates available now</span>
     </div>
   </section>
 
-  <!-- NEWS TICKER ─────────────────────── -->
-  <div class="news-ticker">
-    <div class="ticker-inner" id="ticker-inner"></div>
+  <!-- TICKER -->
+  <div class="ticker-bar">
+    <div class="ticker-tape" id="ticker-inner"></div>
   </div>
 
-  <!-- GALLERY ─────────────────────────── -->
+  <!-- ZONES (lean: icons + names + one-liners) -->
   <section class="section" id="gallery-section">
-    <div class="section-header">
-      <div class="section-eyebrow">Park Preview</div>
-      <h2 class="section-title">EXPLORE THE <span class="accent">ZONES</span></h2>
-    </div>
-    <div class="gallery-grid" id="gallery-grid"></div>
-  </section>
-
-  <!-- DIVIDER ─────────────────────────── -->
-  <div class="divider-band">
-    <div class="divider-stat"><div class="divider-num">500+</div><div class="divider-lbl">Active Members</div></div>
-    <div class="divider-stat"><div class="divider-num">3+</div><div class="divider-lbl">Years Running</div></div>
-    <div class="divider-stat"><div class="divider-num">15+</div><div class="divider-lbl">Themed Zones</div></div>
-    <div class="divider-stat"><div class="divider-num">4</div><div class="divider-lbl">Spots Per Day</div></div>
-    <div class="divider-stat"><div class="divider-num">3</div><div class="divider-lbl">Golden Tickets Ever</div></div>
-  </div>
-
-  <!-- BOOKING HINTS ───────────────────── -->
-  <section class="section" id="hints-section">
-    <div class="section-header">
-      <div class="section-eyebrow">How It Works</div>
-      <h2 class="section-title">BOOKING <span class="accent">GUIDE</span></h2>
-    </div>
-    <div class="hints-grid" id="hints-grid"></div>
-  </section>
-
-  <!-- ATTRACTIONS + TIPS ──────────────── -->
-  <section class="section" id="extra-section">
-    <div class="grid-2">
-      <div>
-        <div class="section-header" style="margin-bottom:24px">
-          <div class="section-eyebrow">Coming Soon</div>
-          <h2 class="section-title" style="font-size:clamp(1.65rem,3vw,2.4rem)">NEXT <span class="accent">ATTRACTIONS</span></h2>
-        </div>
-        <div class="attractions-list" id="attractions-list"></div>
-      </div>
-      <div>
-        <div class="section-header" style="margin-bottom:24px">
-          <div class="section-eyebrow">Insider Knowledge</div>
-          <h2 class="section-title" style="font-size:clamp(1.65rem,3vw,2.4rem)">VISITOR <span class="accent">TIPS</span></h2>
-        </div>
-        <div class="tips-list" id="tips-list"></div>
-      </div>
+    <div class="sec-eyebrow">Explore · Heide Park Roblox</div>
+    <h2 class="sec-h2">Our <em>Attractions</em></h2>
+    <div class="zones-grid" id="gallery-grid"></div>
+    <div class="sec-book-pull">
+      <div class="sbp-line"></div>
+      <button class="sbp-btn" id="zones-cta-btn">Ready to visit? Book your tickets ↓</button>
+      <div class="sbp-line"></div>
     </div>
   </section>
 
-  <!-- FUN FACTS ───────────────────────── -->
-  <section class="section" id="facts-section">
-    <div class="section-header">
-      <div class="section-eyebrow">Did You Know?</div>
-      <h2 class="section-title">PARK <span class="accent">FACTS</span></h2>
-    </div>
-    <div class="facts-carousel">
-      <div class="fact-text" id="fact-text">"Loading…"</div>
-      <div class="facts-dots" id="facts-dots"></div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════
-       GOLDEN TICKET  (shown only when enabled in settings)
-  ═══════════════════════════════════ -->
+  <!-- GOLDEN TICKET -->
   <section class="section" id="golden-ticket-section" style="display:none">
-    <div class="section-header" style="text-align:center">
-      <div class="section-eyebrow" style="justify-content:center">✦ Ultra Rare Drop ✦</div>
-      <h2 class="section-title" style="text-align:center">
-        THE <span style="background:linear-gradient(135deg,#f0b800,#ffe066);-webkit-background-clip:text;-webkit-text-fill-color:transparent">GOLDEN TICKET</span>
-      </h2>
-    </div>
-
-    <div class="golden-ticket-wrapper">
-      <div class="golden-ticket-card" id="golden-ticket-card">
-        <div class="gt-badge">✦ Legendary Item ✦</div>
-        <span class="gt-icon-main">🏆</span>
-        <div class="gt-title">GOLDEN TICKET</div>
-        <p class="gt-sub">
-          One of the rarest items in Heide Park Roblox history. Only one person may ever hold this ticket.
-          It grants exclusive VIP access to a special event day. Once claimed — it is gone forever.
-        </p>
-        <div id="gt-date-badge" class="gt-date-badge" style="display:none"></div>
-        <div style="margin-top:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-          <button class="btn-claim-golden" id="btn-claim-golden" style="display:none">
-            <span>✦</span> REQUEST GOLDEN TICKET <span>✦</span>
-          </button>
-          <div class="gt-pending-badge" id="gt-pending-badge" style="display:none"></div>
-          <div class="gt-claimed-badge" id="gt-claimed-badge" style="display:none"></div>
-        </div>
+    <div class="sec-eyebrow">✦ Rare Drop · Only One Exists</div>
+    <h2 class="sec-h2">The <em>Golden Ticket</em></h2>
+    <div class="gt-card" id="golden-ticket-card">
+      <div class="gt-shine"></div>
+      <div class="gt-medal-col"><div class="gt-medal">🏆</div><div class="gt-rarity">LEGENDARY</div></div>
+      <div class="gt-info">
+        <div class="gt-title-text">GOLDEN TICKET</div>
+        <div class="gt-blurb">The rarest item in park history. One holder, one event, forever. Grants exclusive VIP access to a special event day. Once claimed — gone forever.</div>
+        <div id="gt-date-badge" style="display:none" class="gt-event-badge"></div>
+      </div>
+      <div class="gt-cta-col">
+        <button id="btn-claim-golden" class="gt-btn" style="display:none">✦ Request Ticket</button>
+        <div id="gt-pending-badge" class="gt-status-badge pending" style="display:none">⏳ Pending approval</div>
+        <div id="gt-claimed-badge" class="gt-status-badge claimed" style="display:none"></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════
-       CALENDAR
-  ═══════════════════════════════════ -->
+  <!-- CALENDAR -->
   <section class="section" id="calendar-section">
-    <div class="section-header">
-      <div class="section-eyebrow">Reserve Your Spot</div>
-      <h2 class="section-title">EVENT <span class="accent">CALENDAR</span></h2>
-    </div>
+    <div class="sec-eyebrow">Weekend Events · 2026 Season</div>
+    <h2 class="sec-h2">Book Your <em>Tickets</em></h2>
+    <div class="booking-layout">
 
-    <div class="calendar-wrapper">
-      <div class="calendar-header">
-        <div class="calendar-title-group">
-          <div class="calendar-title">REQUEST A DATE</div>
-          <div class="calendar-sub">Max 2 weeks ahead · Weekends only · 4 confirmed spots per day · Bookings are pending until admin approval</div>
+      <!-- Info sidebar -->
+      <aside class="booking-aside">
+        <div class="ba-card">
+          <div class="ba-card-title">How to Book</div>
+          <div class="ba-steps">
+            <div class="bas"><div class="bas-n">1</div><div>Pick an available date</div></div>
+            <div class="bas"><div class="bas-n">2</div><div>Verify your identity</div></div>
+            <div class="bas"><div class="bas-n">3</div><div>Accept park rules</div></div>
+            <div class="bas"><div class="bas-n">4</div><div>Submit your request</div></div>
+            <div class="bas"><div class="bas-n">5</div><div>Await admin confirmation</div></div>
+          </div>
         </div>
-        <div class="calendar-controls">
-          <select class="cal-select" id="cal-month"></select>
-          <select class="cal-select" id="cal-year"></select>
+        <div class="ba-card">
+          <div class="ba-card-title">Calendar Key</div>
+          <div class="ba-key">
+            <div class="bak"><div class="bakd available"></div><span>Available</span></div>
+            <div class="bak"><div class="bakd partial"></div><span>Filling Up</span></div>
+            <div class="bak"><div class="bakd soldout"></div><span>Sold Out</span></div>
+            <div class="bak"><div class="bakd confirmed"></div><span>Your Booking ✓</span></div>
+            <div class="bak"><div class="bakd pending-key"></div><span>Your Request ⏳</span></div>
+            <div class="bak"><div class="bakd golden-key"></div><span>✦ Golden Day</span></div>
+          </div>
         </div>
-      </div>
+        <div class="ba-notice">
+          <strong>Note:</strong> Requests are pending until confirmed by the park admin. You will be notified via Discord.
+        </div>
+      </aside>
 
-      <div class="calendar-legend">
-        <div class="legend-item"><div class="legend-dot available"></div>Available</div>
-        <div class="legend-item"><div class="legend-dot partial"></div>Partial</div>
-        <div class="legend-item"><div class="legend-dot soldout"></div>Sold Out</div>
-        <div class="legend-item"><div class="legend-dot confirmed"></div>✓ Your Booking</div>
-        <div class="legend-item"><div class="legend-dot pending"></div>⏳ Your Request</div>
-        <div class="legend-item"><div class="legend-dot past"></div>Unavailable</div>
-        <div class="legend-item"><div class="legend-dot golden"></div>✦ Golden Day</div>
+      <!-- Calendar widget -->
+      <div class="cal-widget">
+        <div class="cal-topbar">
+          <div class="cal-selects">
+            <select class="cal-sel" id="cal-month"></select>
+            <select class="cal-sel" id="cal-year"></select>
+          </div>
+          <div class="cal-cap-info">Max <strong id="cal-max">4</strong> guests/day</div>
+        </div>
+        <div class="cal-days-head">
+          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div>
+          <div class="wk">Fri</div><div class="wk">Sat</div>
+        </div>
+        <div class="cal-grid" id="calendar-grid"></div>
       </div>
-
-      <div class="calendar-weekdays">
-        <div class="cal-weekday">SUN</div>
-        <div class="cal-weekday">MON</div>
-        <div class="cal-weekday">TUE</div>
-        <div class="cal-weekday">WED</div>
-        <div class="cal-weekday">THU</div>
-        <div class="cal-weekday weekend">FRI</div>
-        <div class="cal-weekday weekend">SAT</div>
-      </div>
-
-      <div class="calendar-grid" id="calendar-grid"></div>
     </div>
   </section>
 
-  <!-- FOOTER ──────────────────────────── -->
-  <footer>
-    <div class="footer-brand">🎢 HEIDE PARK ROBLOX</div>
-    <div class="footer-copy">© 2026 Heide Park Roblox · Not affiliated with the real Heide Park · All rights reserved</div>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="sf-wrap">
+      <div class="sf-brand">🎢 Heide Park Roblox</div>
+      <div class="sf-links"><a href="#">Park Rules</a><a href="#">Terms</a><a href="#">Discord</a></div>
+      <div class="sf-copy">© 2026 Heide Park Roblox · Not affiliated with the real Heide Park</div>
+    </div>
   </footer>
+</div>
 
-</div><!-- /#main-site -->
+<!-- BOOKING MODAL (multi-step) -->
+<div id="bk-overlay">
+  <div class="bk-panel" id="bk-panel">
+    <button class="bk-x" id="bk-x">✕</button>
 
-<!-- ═══════════════════════════════════════════
-     BOOKING MODAL
-═══════════════════════════════════════════ -->
-<div id="booking-modal" class="modal-backdrop">
-  <div class="booking-panel">
-
-    <!-- Loading phase -->
-    <div id="modal-loading" class="modal-loading">
-      <div class="modal-loading-ring"></div>
-      <div class="modal-loading-text">Connecting to reservation system…</div>
-      <div class="modal-loading-sub">Please wait while we load your booking</div>
+    <!-- Step 0: Loading queue -->
+    <div class="bk-step active" id="bk-s0">
+      <div class="bk-load-wrap">
+        <div class="bk-load-icon">🎟</div>
+        <div class="bk-load-title">Checking Availability</div>
+        <div class="bk-prog-track"><div class="bk-prog-bar" id="bk-prog"></div></div>
+        <div class="bk-load-msg" id="bk-load-msg">Connecting to reservation system…</div>
+        <div class="bk-chklist" id="bk-chklist">
+          <div class="bkci pending" id="bkci-1"><span></span>Verifying date availability</div>
+          <div class="bkci" id="bkci-2"><span></span>Loading capacity data</div>
+          <div class="bkci" id="bkci-3"><span></span>Securing your session</div>
+        </div>
+      </div>
     </div>
 
-    <!-- Form phase -->
-    <div id="modal-form" class="modal-form">
-
-      <!-- Pending notice -->
-      <div class="modal-pending-notice">
-        <span>⏳</span>
-        <div><strong>This is a request, not an instant booking.</strong><br>After submitting, your spot will be marked as <em>Pending</em> until the admin confirms it in settings.js. You'll be notified via Discord.</div>
+    <!-- Step 1: Identity -->
+    <div class="bk-step" id="bk-s1">
+      <div class="bk-crumb">
+        <span class="bkc bkc-active">1 · Verify</span><span class="bkc-sep">›</span>
+        <span class="bkc">2 · Rules</span><span class="bkc-sep">›</span>
+        <span class="bkc">3 · Review</span>
       </div>
-
-      <div class="booking-date-badge">
-        <span>📅</span>
-        <span id="booking-date-label">Loading…</span>
+      <div class="bk-date-card">
+        <div class="bkdc-label">Selected Date</div>
+        <div class="bkdc-date" id="bkdc-date">—</div>
+        <div class="bkdc-meta" id="bkdc-meta">— spots remaining</div>
+        <div class="bkdc-dots" id="bkdc-dots"></div>
       </div>
-
-      <div class="modal-title">REQUEST BOOKING</div>
-      <div class="modal-sub">Verify your identity and accept all rules to submit your booking request.</div>
-
-      <div class="booking-spots">
-        <div class="spots-label" id="booking-spots-label">Checking spots…</div>
-        <div class="spots-dots" id="booking-spots-dots"></div>
+      <div class="bk-field">
+        <label>Confirm your Roblox username</label>
+        <input id="bk-uname" type="text" placeholder="Must match your login exactly" autocomplete="off" spellcheck="false"/>
       </div>
-
-      <form id="booking-form-el" novalidate>
-        <div class="form-group">
-          <label for="booking-confirm-username">Confirm Your Roblox Username</label>
-          <input type="text" id="booking-confirm-username" placeholder="Re-enter your username" autocomplete="off" />
-        </div>
-
-        <div class="captcha-box">
-          <label>Prove you're not a robot — solve this:</label>
-          <div class="captcha-q" id="captcha-question">0 + 0 = ?</div>
-          <input type="number" id="captcha-input" placeholder="Your answer" />
-        </div>
-
-        <div class="modal-rules">
-          <h4>⚠ Booking Rules — Read Carefully</h4>
-          <ul>
-            <li>All ticket requests are subject to admin approval. A PENDING status is not a confirmation.</li>
-            <li>Confirmed tickets are strictly non-refundable under all circumstances.</li>
-            <li>Tickets are non-transferable and permanently bound to your Roblox username.</li>
-            <li>Entry is only permitted on the exact date shown on your confirmed ticket.</li>
-            <li>Violations of park rules result in immediate removal without any refund.</li>
-          </ul>
-        </div>
-
-        <div class="form-checks">
-          <div class="form-check">
-            <input type="checkbox" id="confirm-cb-1" />
-            <label for="confirm-cb-1">I understand my request is PENDING until admin confirmation.</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" id="confirm-cb-2" />
-            <label for="confirm-cb-2">I accept that confirmed tickets are final — no refunds.</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" id="confirm-cb-3" />
-            <label for="confirm-cb-3">I accept that my ticket is non-transferable.</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" id="confirm-cb-4" />
-            <label for="confirm-cb-4">I agree to follow all park rules during the event.</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" id="confirm-cb-5" />
-            <label for="confirm-cb-5">I confirm this is my real Roblox username and I own this account.</label>
-          </div>
-        </div>
-
-        <div id="booking-error" style="display:none;padding:10px 13px;background:rgba(224,53,53,.12);border:1px solid rgba(224,53,53,.3);border-radius:10px;color:#e03535;font-size:.81rem;margin-bottom:14px"></div>
-
-        <button type="submit" class="btn-book" id="btn-book">⏳ SUBMIT BOOKING REQUEST</button>
-        <button type="button" class="btn-cancel" id="btn-cancel-booking">Cancel</button>
-      </form>
+      <div class="bk-captcha">
+        <div class="bk-cap-label">Quick security check</div>
+        <div class="bk-cap-q" id="bk-cap-q">— + — = ?</div>
+        <input id="bk-cap-a" type="number" placeholder="Your answer"/>
+      </div>
+      <div class="bk-err" id="bk-e1" style="display:none"></div>
+      <button class="bk-btn-next" id="bk-n1">Continue to Rules →</button>
     </div>
 
+    <!-- Step 2: Rules -->
+    <div class="bk-step" id="bk-s2">
+      <div class="bk-crumb">
+        <span class="bkc bkc-done">1 · Verify ✓</span><span class="bkc-sep">›</span>
+        <span class="bkc bkc-active">2 · Rules</span><span class="bkc-sep">›</span>
+        <span class="bkc">3 · Review</span>
+      </div>
+      <div class="bk-rules-title">Park Rules &amp; Terms</div>
+      <div class="bk-rules-list">
+        <div class="bk-rule"><div class="bkr-num">01</div><div>Booking requests are <strong>pending</strong> until confirmed by admin. Pending status does not guarantee a spot.</div></div>
+        <div class="bk-rule"><div class="bkr-num">02</div><div>Confirmed tickets are <strong>non-refundable</strong> under any circumstance.</div></div>
+        <div class="bk-rule"><div class="bkr-num">03</div><div>Tickets are <strong>non-transferable</strong> and permanently linked to your Roblox username.</div></div>
+        <div class="bk-rule"><div class="bkr-num">04</div><div>Entry is only valid on the <strong>exact booked date</strong>. No exceptions.</div></div>
+        <div class="bk-rule"><div class="bkr-num">05</div><div>Violations of park rules result in <strong>immediate removal</strong> without refund.</div></div>
+      </div>
+      <div class="bk-checks">
+        <label class="bk-chk"><input type="checkbox" id="cb1"/><span>I understand requests are pending until admin approval</span></label>
+        <label class="bk-chk"><input type="checkbox" id="cb2"/><span>Confirmed tickets are non-refundable</span></label>
+        <label class="bk-chk"><input type="checkbox" id="cb3"/><span>Ticket is non-transferable and linked to my username</span></label>
+        <label class="bk-chk"><input type="checkbox" id="cb4"/><span>I will only attend on my booked date</span></label>
+        <label class="bk-chk"><input type="checkbox" id="cb5"/><span>This is my real Roblox account</span></label>
+      </div>
+      <div class="bk-err" id="bk-e2" style="display:none"></div>
+      <div class="bk-btn-row"><button class="bk-btn-back" id="bk-b2">← Back</button><button class="bk-btn-next" id="bk-n2">Review Booking →</button></div>
+    </div>
+
+    <!-- Step 3: Summary -->
+    <div class="bk-step" id="bk-s3">
+      <div class="bk-crumb">
+        <span class="bkc bkc-done">1 · Verify ✓</span><span class="bkc-sep">›</span>
+        <span class="bkc bkc-done">2 · Rules ✓</span><span class="bkc-sep">›</span>
+        <span class="bkc bkc-active">3 · Review</span>
+      </div>
+      <div class="bk-sum-head">Booking Summary</div>
+      <div class="bk-sum-card">
+        <div class="bksc-row"><span>Guest</span><strong id="bks-guest">—</strong></div>
+        <div class="bksc-row"><span>Date</span><strong id="bks-date">—</strong></div>
+        <div class="bksc-row"><span>Event</span><strong>Heide Park Roblox Weekend</strong></div>
+        <div class="bksc-row"><span>Type</span><strong>Standard Entry · 1 Guest</strong></div>
+        <div class="bksc-row"><span>Status after submit</span><strong class="bksc-status">⏳ Pending Approval</strong></div>
+        <div class="bksc-note">Once submitted, the park admin will review and confirm your spot. You will be notified via Discord.</div>
+      </div>
+      <div class="bk-err" id="bk-e3" style="display:none"></div>
+      <div class="bk-btn-row"><button class="bk-btn-back" id="bk-b3">← Back</button><button class="bk-btn-submit" id="bk-submit">Submit Booking Request</button></div>
+    </div>
+
+    <!-- Step 4: Sending -->
+    <div class="bk-step" id="bk-s4">
+      <div class="bk-sending">
+        <div class="bk-send-ring"></div>
+        <div class="bk-send-title">Submitting your request…</div>
+        <div class="bk-send-msg" id="bk-send-msg">Sending to reservation system</div>
+      </div>
+    </div>
+
+    <!-- Step 5: Done -->
+    <div class="bk-step" id="bk-s5">
+      <div class="bk-done">
+        <div class="bk-done-icon">⏳</div>
+        <div class="bk-done-title">Request Submitted</div>
+        <div class="bk-done-body" id="bk-done-body">Your booking request is pending admin review.</div>
+        <div class="bk-done-ref" id="bk-done-ref"></div>
+        <button class="bk-done-close" id="bk-done-close">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     SUCCESS OVERLAY
-═══════════════════════════════════════════ -->
-<div id="success-overlay" class="success-overlay">
-  <div class="success-card">
-    <div class="success-icon" id="success-icon">⏳</div>
-    <div class="success-title" id="success-title">SENT!</div>
-    <div class="success-sub"   id="success-sub">Your request has been submitted.</div>
-    <button class="btn-close-success" id="btn-close-success">GOT IT</button>
+<!-- GOLDEN TICKET FLOW -->
+<div id="gt-overlay">
+  <div class="bk-panel">
+    <button class="bk-x" id="gt-close">✕</button>
+    <div class="bk-step active" id="gt-s0">
+      <div class="bk-sending" style="padding:70px 0">
+        <div class="bk-send-ring" style="border-top-color:#f0b800;border-right-color:#ffe066"></div>
+        <div class="bk-send-title" style="color:#f0b800">Verifying golden ticket…</div>
+      </div>
+    </div>
+    <div class="bk-step" id="gt-s1">
+      <div class="gt-flow">
+        <div class="gtf-icon">🏆</div>
+        <div class="gtf-title">Request Golden Ticket</div>
+        <div class="gtf-desc">You are about to request the legendary Golden Ticket. Only one person may ever hold it.</div>
+        <div class="bk-field" style="margin-top:22px">
+          <label>Confirm your Roblox username</label>
+          <input id="gt-uname" type="text" placeholder="Exact Roblox username" autocomplete="off"/>
+        </div>
+        <div class="bk-err" id="gt-err" style="display:none"></div>
+        <button class="bk-btn-submit" id="gt-submit" style="background:linear-gradient(135deg,#f0b800,#ffe066);color:#111;margin-top:16px">✦ Submit Golden Request</button>
+      </div>
+    </div>
+    <div class="bk-step" id="gt-s2">
+      <div class="bk-done">
+        <div class="bk-done-icon" style="color:#f0b800">✦</div>
+        <div class="bk-done-title" style="color:#f0b800">Request Sent!</div>
+        <div class="bk-done-body">Your Golden Ticket request is pending admin approval. Watch Discord for confirmation.</div>
+        <button class="bk-done-close" id="gt-done-close">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 
