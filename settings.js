@@ -1,198 +1,197 @@
 // ============================================================
-//  HEIDE PARK ROBLOX — SETTINGS.JS
-//  Master Configuration File
-//  Edit everything here. The website reads all values from here.
+//  HEIDE PARK ROBLOX — SETTINGS.JS  v3
+//  Master Configuration — edit ONLY this file.
+//  The website reads 100% of its data from here.
 // ============================================================
 
 const SETTINGS = {
 
-  // ----------------------------------------------------------
+  // ──────────────────────────────────────────────────────────
   //  PARK INFO
-  // ----------------------------------------------------------
+  // ──────────────────────────────────────────────────────────
   park: {
-    name: "Heide Park Roblox",
-    tagline: "The Biggest Roblox Theme Park Experience",
-    maxBookingsPerDay: 4,       // Max users per normal day
-    bookingWindowDays: 14,      // How many days ahead users can book
+    name:              "Heide Park Roblox",
+    tagline:           "The Ultimate Roblox Theme Park Experience",
+    maxBookingsPerDay: 4,     // confirmed spots per day (PENDING does not count toward this)
+    bookingWindowDays: 14,    // how many days ahead users may request a booking
   },
 
-  // ----------------------------------------------------------
+  // ──────────────────────────────────────────────────────────
   //  WEBHOOKS
-  // ----------------------------------------------------------
+  //  Both URLs are pre-configured and ready.
+  // ──────────────────────────────────────────────────────────
   webhooks: {
     regularBooking: "https://discordapp.com/api/webhooks/1473284499931533438/eZnWVr5ohWSBWLMsGSRNtWC5x3EPGHVnl9HsTjZf7pO9Ayhz-OjH7dNiacpB1ZMhauNS",
     goldenTicket:   "https://discordapp.com/api/webhooks/1478765370515914764/MWtoQRSeeujSimtfOBJ8-KOQ7lR7kwd-OCZG1ObXf3tH8FJ-dFqeKwbjG-D3YoJO9JIS",
   },
 
-  // ----------------------------------------------------------
+  // ──────────────────────────────────────────────────────────
   //  GOLDEN TICKET SYSTEM
-  //  enabled: true/false — show golden ticket on homepage
-  //  claimedBy: "" — username who claimed it (empty = not claimed)
-  //  bookingDate: "YYYY-MM-DD" or null — which date it grants access to
-  //  If bookingDate is null, golden ticket holder gets VIP entry any day
-  // ----------------------------------------------------------
+  //
+  //  enabled:     true / false — shows the section on the homepage
+  //  claimedBy:   "" — username of the person who CONFIRMED the ticket
+  //               Leave empty ("") if nobody has it yet.
+  //               PENDING claims are stored in localStorage, not here.
+  //  pendingBy:   "" — if someone requested it and you approved it,
+  //               move their username into claimedBy and clear pendingBy.
+  //  bookingDate: "YYYY-MM-DD" — the specific date it's valid for.
+  //               Set to null if it grants open entry on any day.
+  //  label:       A short display name for the event, e.g. "VIP Saturday"
+  // ──────────────────────────────────────────────────────────
   goldenTicket: {
-    enabled: true,
-    claimedBy: "",              // e.g. "PlayerXYZ" — leave empty if not yet claimed
-    bookingDate: "2025-03-04",  // The day the golden ticket is valid for (YYYY-MM-DD)
-    label: "Golden Saturday",   // Display name shown on the ticket
+    enabled:     true,
+    claimedBy:   "",              // set to a username once you confirm it
+    pendingBy:   "",              // auto-filled by the system when someone requests — you clear this after deciding
+    bookingDate: "2026-03-22",    // YYYY-MM-DD
+    label:       "VIP Spring Saturday",
   },
 
-  // ----------------------------------------------------------
-  //  FUN FACTS (shown on homepage, rotated randomly)
-  //  Add as many as you want. Delete any you don't want.
-  // ----------------------------------------------------------
-  funFacts: [
-    "Heide Park Roblox was founded in 2022 and now has over 500 active members!",
-    "Our most popular attraction gets visited over 1,000 times per event day.",
-    "Every event weekend is planned months in advance with custom builds.",
-    "The park record for most visitors in one day is 42 players!",
-    "We have over 15 unique themed zones across the map.",
-    "Our team of builders has spent over 10,000 hours creating the park.",
-    "Golden Tickets have only been issued 3 times in park history.",
-    "Every weekend event features live DJ music in the central plaza.",
-  ],
-
-  // ----------------------------------------------------------
-  //  PARK NEWS (shown as ticker or news section on homepage)
-  // ----------------------------------------------------------
-  parkNews: [
-    { date: "2025-07-10", text: "New roller coaster zone opening this summer!" },
-    { date: "2025-07-05", text: "Weekend event capacity increased to 4 guests per session." },
-    { date: "2025-06-28", text: "Golden Ticket event coming soon — stay tuned!" },
-    { date: "2025-06-20", text: "VIP lounge area has been rebuilt with new lighting effects." },
-  ],
-
-  // ----------------------------------------------------------
-  //  VISITOR TIPS (shown in tips section on homepage)
-  // ----------------------------------------------------------
-  visitorTips: [
-    "Join the Discord server to get notified when new tickets drop!",
-    "Book early — weekends sell out within hours of release.",
-    "Arrive in the server 5 minutes early to get the best spawn spots.",
-    "Follow park rules or risk being removed from the event.",
-    "Use the VIP entrance if you hold a Golden Ticket.",
-  ],
-
-  // ----------------------------------------------------------
-  //  NEXT ATTRACTIONS (shown on homepage)
-  // ----------------------------------------------------------
-  nextAttractions: [
-    { name: "Thunder Mountain XL",   eta: "August 2025",    icon: "⚡" },
-    { name: "Haunted Mansion Reboot", eta: "October 2025",   icon: "👻" },
-    { name: "Winter World Zone",      eta: "December 2025",  icon: "❄️" },
-  ],
-
-  // ----------------------------------------------------------
+  // ──────────────────────────────────────────────────────────
   //  BOOKING CALENDAR
-  //  Structure: bookingDays[year][month][day]
   //
-  //  Each day object:
-  //    enabled:  true/false — show this day as bookable
-  //    bookedBy: [] — array of Roblox usernames who booked
-  //              Max 4 = sold out automatically
+  //  Structure: bookingDays[YEAR][MONTH][DAY]
   //
-  //  months are 1-indexed (1 = January, 7 = July, etc.)
-  //  days are the day number of the month (1–31)
+  //  Each entry is an object with:
+  //    enabled:    true / false  — whether this day appears as bookable
+  //    bookedBy:   []            — array of CONFIRMED Roblox usernames
+  //                               (max = maxBookingsPerDay → Sold Out)
+  //    pendingBy:  []            — array of PENDING usernames
+  //                               (these are waiting for your approval)
   //
-  //  ONLY WEEKENDS matter per the rules, but you can add any day.
-  //  Past days are automatically hidden by the app.
-  // ----------------------------------------------------------
+  //  HOW TO CONFIRM A BOOKING:
+  //    1. You receive a Discord notification from the webhook.
+  //    2. Open settings.js.
+  //    3. Find the correct year → month → day.
+  //    4. Move the username from pendingBy[] to bookedBy[].
+  //    5. Save the file. The website reflects it on reload.
+  //
+  //  Months are 1-indexed (1 = January, 12 = December).
+  //  Days are the calendar day number (1–31).
+  //  Past days are automatically hidden by the site.
+  // ──────────────────────────────────────────────────────────
   bookingDays: {
-
-    2025: {
-
-      7: { // July 2025
-        5:  { enabled: true,  bookedBy: ["PlayerAlpha", "CoolRider99", "ParkFan2025", "AwesomeGamer"] },
-        6:  { enabled: true,  bookedBy: ["XboxKing", "RobloxPro"] },
-        12: { enabled: true,  bookedBy: [] },
-        13: { enabled: true,  bookedBy: ["NightRider77"] },
-        19: { enabled: true,  bookedBy: [] },
-        20: { enabled: true,  bookedBy: [] },
-        26: { enabled: true,  bookedBy: [] },
-        27: { enabled: true,  bookedBy: [] },
-      },
-
-      8: { // August 2025
-        2:  { enabled: true,  bookedBy: [] },
-        3:  { enabled: true,  bookedBy: [] },
-        9:  { enabled: true,  bookedBy: [] },
-        10: { enabled: true,  bookedBy: [] },
-        16: { enabled: true,  bookedBy: [] },
-        17: { enabled: true,  bookedBy: [] },
-        23: { enabled: true,  bookedBy: [] },
-        24: { enabled: true,  bookedBy: [] },
-        30: { enabled: true,  bookedBy: [] },
-        31: { enabled: true,  bookedBy: [] },
-      },
-
-      9: { // September 2025
-        6:  { enabled: true,  bookedBy: [] },
-        7:  { enabled: true,  bookedBy: [] },
-        13: { enabled: true,  bookedBy: [] },
-        14: { enabled: true,  bookedBy: [] },
-        20: { enabled: true,  bookedBy: [] },
-        21: { enabled: true,  bookedBy: [] },
-        27: { enabled: true,  bookedBy: [] },
-        28: { enabled: true,  bookedBy: [] },
-      },
-
-      10: { // October 2025
-        4:  { enabled: true,  bookedBy: [] },
-        5:  { enabled: true,  bookedBy: [] },
-        11: { enabled: true,  bookedBy: [] },
-        12: { enabled: true,  bookedBy: [] },
-        18: { enabled: true,  bookedBy: [] },
-        19: { enabled: true,  bookedBy: [] },
-        25: { enabled: false, bookedBy: [] }, // disabled example
-        26: { enabled: true,  bookedBy: [] },
-      },
-
-    },
 
     2026: {
 
-      1: { // January 2026
-        3:  { enabled: true,  bookedBy: [] },
-        4:  { enabled: true,  bookedBy: [] },
-        10: { enabled: true,  bookedBy: [] },
-        11: { enabled: true,  bookedBy: [] },
-        17: { enabled: true,  bookedBy: [] },
-        18: { enabled: true,  bookedBy: [] },
-        24: { enabled: true,  bookedBy: [] },
-        25: { enabled: true,  bookedBy: [] },
-        31: { enabled: true,  bookedBy: [] },
-      },
-
-      2: { // February 2026
-        1:  { enabled: true,  bookedBy: [] },
-        7:  { enabled: true,  bookedBy: [] },
-        8:  { enabled: true,  bookedBy: [] },
-        14: { enabled: true,  bookedBy: [] },
-        15: { enabled: true,  bookedBy: [] },
-        21: { enabled: true,  bookedBy: [] },
-        22: { enabled: true,  bookedBy: [] },
-        28: { enabled: true,  bookedBy: [] },
-      },
-
       3: { // March 2026
-        1:  { enabled: true,  bookedBy: [] },
-        7:  { enabled: true,  bookedBy: [] },
-        8:  { enabled: true,  bookedBy: [] },
-        14: { enabled: true,  bookedBy: [] },
-        15: { enabled: true,  bookedBy: [] },
-        21: { enabled: true,  bookedBy: [] },
-        22: { enabled: true,  bookedBy: [] },
-        28: { enabled: true,  bookedBy: [] },
-        29: { enabled: true,  bookedBy: [] },
+        //  Sat 7 March
+        7:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        //  Sun 8 March
+        8:  { enabled: true,  bookedBy: ["CoolRider99"],       pendingBy: ["WaitingUser1"] },
+        //  Sat 14 March
+        14: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        //  Sun 15 March
+        15: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        //  Sat 21 March
+        21: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        //  Sun 22 March  ← Golden Ticket day
+        22: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        //  Sat 28 March
+        28: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        //  Sun 29 March
+        29: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+      },
+
+      4: { // April 2026
+        4:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        5:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        11: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        12: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        18: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        19: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        25: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        26: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+      },
+
+      5: { // May 2026
+        2:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        3:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        9:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        10: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        16: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        17: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        23: { enabled: false, bookedBy: [],                    pendingBy: [] }, // disabled
+        24: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        30: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        31: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+      },
+
+      6: { // June 2026
+        6:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        7:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        13: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        14: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        20: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        21: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        27: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        28: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+      },
+
+      7: { // July 2026
+        4:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        5:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        11: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        12: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        18: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        19: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        25: { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        26: { enabled: true,  bookedBy: [],                    pendingBy: [] },
       },
 
     },
 
   },
 
+  // ──────────────────────────────────────────────────────────
+  //  FUN FACTS  (rotated on homepage every 5 seconds)
+  //  Add, remove, or edit freely.
+  // ──────────────────────────────────────────────────────────
+  funFacts: [
+    "Heide Park Roblox was founded in 2022 and now has over 500 active members!",
+    "Our most popular attraction gets visited over 1,000 times per event day.",
+    "Every weekend event is planned months in advance with fully custom builds.",
+    "The park record for most visitors in one day stands at 42 simultaneous players!",
+    "We have over 15 unique themed zones spread across our massive map.",
+    "Our build team has collectively spent over 10,000 hours creating the park.",
+    "Golden Tickets have only ever been issued 3 times in park history.",
+    "Every weekend event features live DJ music broadcast in the central plaza.",
+    "The park map is larger than 10 full Roblox baseplate areas combined.",
+  ],
+
+  // ──────────────────────────────────────────────────────────
+  //  PARK NEWS TICKER
+  // ──────────────────────────────────────────────────────────
+  parkNews: [
+    { date: "2026-03-01", text: "Spring season officially kicks off March 7th — book your spot now!" },
+    { date: "2026-02-20", text: "VIP Spring Saturday Golden Ticket is now available — claim it before it's gone!" },
+    { date: "2026-02-10", text: "New roller coaster zone confirmed for Summer 2026." },
+    { date: "2026-01-28", text: "Weekend event capacity stays at 4 confirmed guests per session." },
+  ],
+
+  // ──────────────────────────────────────────────────────────
+  //  VISITOR TIPS
+  // ──────────────────────────────────────────────────────────
+  visitorTips: [
+    "Join our Discord server to get notified the moment new tickets drop!",
+    "Book early — weekend slots sell out within hours of opening.",
+    "Arrive in the Roblox server 5 minutes early for the best spawn spots.",
+    "Always follow park rules — violations result in removal without refund.",
+    "Golden Ticket holders use the dedicated VIP entrance on the east side.",
+  ],
+
+  // ──────────────────────────────────────────────────────────
+  //  NEXT ATTRACTIONS  (shown on homepage)
+  // ──────────────────────────────────────────────────────────
+  nextAttractions: [
+    { name: "Thunder Mountain XL",    eta: "Summer 2026",    icon: "⚡" },
+    { name: "Haunted Mansion Reboot", eta: "October 2026",   icon: "👻" },
+    { name: "Winter World Zone",      eta: "December 2026",  icon: "❄️" },
+  ],
+
 };
-// ============================================================
-//  END OF SETTINGS — Do not modify below this line
-// ============================================================
+
+// ──────────────────────────────────────────────────────────
+//  END OF SETTINGS
+//  Do not add code below this line.
+// ──────────────────────────────────────────────────────────
 if (typeof module !== "undefined") module.exports = SETTINGS;
