@@ -75,7 +75,7 @@ const SETTINGS = {
 
       3: { // March 2026
         //  Sat 7 March
-        7:  { enabled: true,  bookedBy: [],                    pendingBy: [] },
+        7:  { enabled: true,  bookedBy: ["NimmiLo"],                    pendingBy: [] },
         //  Sun 8 March
         8:  { enabled: true,  bookedBy: [],       pendingBy: [] },
         //  Sat 14 March
