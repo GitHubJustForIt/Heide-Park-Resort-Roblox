@@ -10,6 +10,8 @@ let currentAge  = null;
 let calYear, calMonth;
 let captchaAnswer = 0;
 let activeDate    = null;   // { key, d, bookedBy }
+let contactType   = 'discord'; // 'discord' | 'tiktok'
+let gtContactType = 'discord';
 let statusPollTimer = null; // interval handle for live status updates
 let gtCompTimer     = null; // golden ticket competition animation
 
@@ -454,6 +456,8 @@ function openBooking(dk,d,bookedBy){
 
   // Reset fields
   document.getElementById('bk-uname').value='';
+  document.getElementById('bk-contact').value='';
+  contactType='discord'; setContactType('discord', false);
   document.getElementById('bk-cap-a').value='';
   ['cb1','cb2','cb3','cb4','cb5'].forEach(id=>{const el=document.getElementById(id);if(el)el.checked=false;});
   ['bk-e1','bk-e2','bk-e3'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
@@ -509,6 +513,9 @@ function step1to2(){
     return showErr('bk-e1','Username does not match your login. Please enter it exactly.');
   if(isNaN(cap)||cap!==captchaAnswer)
     return showErr('bk-e1','Incorrect answer to the security question. Please try again.');
+  const contact=document.getElementById('bk-contact').value.trim();
+  if(!contact||contact.length<2)
+    return showErr('bk-e1','Please enter your '+( contactType==='discord'?'Discord':'TikTok')+' username so the admin can reach you.');
   document.getElementById('bk-e1').style.display='none';
   showStep('bk-s2');
 }
@@ -518,6 +525,8 @@ function step2to3(){
   if(!all) return showErr('bk-e2','Please confirm all five points before continuing.');
   document.getElementById('bk-e2').style.display='none';
   document.getElementById('bks-guest').textContent=currentUser;
+  const contactVal=document.getElementById('bk-contact').value.trim();
+  document.getElementById('bks-contact').textContent=(contactType==='discord'?'Discord: ':'TikTok: ')+contactVal;
   document.getElementById('bks-date').textContent=activeDate
     ?`${activeDate.d} ${MONTHS[calMonth-1]} ${calYear}`:'—';
   showStep('bk-s3');
@@ -560,10 +569,12 @@ function doSubmit(){
       if(!bD[y][mo][day].pendingBy.includes(currentUser))
         bD[y][mo][day].pendingBy.push(currentUser);
 
+      const contactInfo=document.getElementById('bk-contact').value.trim();
       sendWebhook(SETTINGS.webhooks.regularBooking,{
         username:currentUser,date:key,type:'Standard Entry',
         age:currentAge,status:'⏳ PENDING — awaiting admin confirmation',
         openSpots:SETTINGS.park.maxBookingsPerDay-bookedBy.length,
+        contact: (contactType==='discord'?'Discord: ':'TikTok: ')+contactInfo,
       });
 
       // Step 5: Final verification
@@ -671,6 +682,26 @@ function wireGoldenFlow(){
   document.getElementById('gt-done-close')?.addEventListener('click',closeGolden);
 }
 
+function setContactType(type, isGT) {
+  if (isGT) {
+    gtContactType = type;
+    document.getElementById('gtct-discord')?.classList.toggle('active', type==='discord');
+    document.getElementById('gtct-tiktok')?.classList.toggle('active',  type==='tiktok');
+    const lbl = document.getElementById('gt-contact-label');
+    const inp = document.getElementById('gt-contact');
+    if(lbl) lbl.textContent = type==='discord' ? 'Discord Username' : 'TikTok Username';
+    if(inp) inp.placeholder = type==='discord' ? 'Your Discord username' : '@yourtiktok';
+  } else {
+    contactType = type;
+    document.getElementById('bkct-discord')?.classList.toggle('active', type==='discord');
+    document.getElementById('bkct-tiktok')?.classList.toggle('active',  type==='tiktok');
+    const lbl = document.getElementById('bk-contact-label');
+    const inp = document.getElementById('bk-contact');
+    if(lbl) lbl.textContent = type==='discord' ? 'Discord Username' : 'TikTok Username';
+    if(inp) inp.placeholder = type==='discord' ? 'Your Discord username' : '@yourtiktok';
+  }
+}
+
 function showGTStep(id){
   document.querySelectorAll('#gt-overlay .bk-step').forEach(s=>{s.classList.remove('active');s.style.display='none';});
   const el=document.getElementById(id); if(el){el.style.display='block';el.classList.add('active');}
@@ -679,7 +710,9 @@ function showGTStep(id){
 function openGolden(){
   if(!currentUser) return;
   document.getElementById('gt-uname').value='';
+  document.getElementById('gt-contact').value='';
   document.getElementById('gt-err').style.display='none';
+  gtContactType='discord'; setContactType('discord', true);
   document.getElementById('gt-overlay').classList.add('open');
   showGTStep('gt-s0');
   setTimeout(()=>showGTStep('gt-s1'),1400);
@@ -695,6 +728,11 @@ function submitGolden(){
     const e=document.getElementById('gt-err');
     e.textContent='Username does not match.'; e.style.display='block'; return;
   }
+  const gtContact=document.getElementById('gt-contact').value.trim();
+  if(!gtContact||gtContact.length<2){
+    const e=document.getElementById('gt-err');
+    e.textContent='Please enter your '+(gtContactType==='discord'?'Discord':'TikTok')+' username.'; e.style.display='block'; return;
+  }
   const d=userData(currentUser);
   d.goldenPending=true; saveData(currentUser,d);
   SETTINGS.goldenTicket.pendingBy=currentUser;
@@ -702,7 +740,8 @@ function submitGolden(){
     username:currentUser,date:SETTINGS.goldenTicket.bookingDate||'Open',
     type:'🏆 GOLDEN TICKET REQUEST',age:currentAge,
     label:SETTINGS.goldenTicket.label,
-    status:'⏳ PENDING — awaiting admin confirmation'
+    status:'⏳ PENDING — awaiting admin confirmation',
+    contact:(gtContactType==='discord'?'Discord: ':'TikTok: ')+gtContact,
   });
   showGTStep('gt-s2');
   buildGoldenTicket(); updatePendingBadge(); confetti(60,true);
@@ -752,6 +791,7 @@ async function sendWebhook(url,data){
       {name:'🎫 Type',    value:String(data.type),    inline:true},
       {name:'🎂 Age',     value:String(data.age||'?'),inline:true},
       {name:'📊 Status',  value:String(data.status),  inline:true},
+      ...(data.contact?[{name:'📬 Contact', value:String(data.contact), inline:true}]:[]),
     ],
     footer:{text:`Heide Park Roblox · ${new Date().toLocaleString()}`}
   };
