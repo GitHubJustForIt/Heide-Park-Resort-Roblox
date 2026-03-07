@@ -26,10 +26,7 @@
       <div class="lsl-logo">🎢</div>
       <div class="lsl-name">HEIDE PARK<br><span>ROBLOX</span></div>
       <div class="lsl-tagline">The #1 Roblox Theme Park</div>
-      <div class="lsl-chips">
-        <span>🎢 Thunder Zone</span><span>🌊 Aqua World</span>
-        <span>👻 Haunted Hollow</span><span>🚀 Space Launch</span>
-      </div>
+      <div class="lsl-quote">"Unforgettable rides. Exclusive events. Your weekend, redefined."</div>
     </div>
     <div class="lsl-footer">2026 Season · Weekends · Limited Spots</div>
   </div>
@@ -110,6 +107,61 @@
   <div class="ticker-bar">
     <div class="ticker-tape" id="ticker-inner"></div>
   </div>
+
+
+  <!-- PARK RULES & TERMS SECTION -->
+  <section class="section rules-section" id="rules-section">
+    <div class="rs-inner">
+      <div class="rs-left">
+        <div class="sec-eyebrow">Important Information</div>
+        <h2 class="rs-title">Park Rules &amp;<br><em>Terms of Entry</em></h2>
+        <p class="rs-intro">By booking a ticket at Heide Park Roblox, you agree to the following rules and terms. Please read them carefully before submitting your request.</p>
+        <div class="rs-highlight">
+          <div class="rsh-icon">⚠</div>
+          <div>All bookings are subject to admin approval. A pending status does <strong>not</strong> guarantee entry.</div>
+        </div>
+      </div>
+      <div class="rs-right">
+        <div class="rs-rules">
+          <div class="rs-rule">
+            <div class="rsr-num">01</div>
+            <div class="rsr-content">
+              <div class="rsr-title">Pending Approval</div>
+              <div class="rsr-text">Every ticket request must be manually reviewed and approved by the park admin. You will be notified via your chosen contact method once confirmed.</div>
+            </div>
+          </div>
+          <div class="rs-rule">
+            <div class="rsr-num">02</div>
+            <div class="rsr-content">
+              <div class="rsr-title">No Refunds</div>
+              <div class="rsr-text">Once a ticket is confirmed, it is non-refundable under any circumstance. Please ensure you can attend on your selected date before submitting.</div>
+            </div>
+          </div>
+          <div class="rs-rule">
+            <div class="rsr-num">03</div>
+            <div class="rsr-content">
+              <div class="rsr-title">Non-Transferable</div>
+              <div class="rsr-text">Tickets are permanently linked to the Roblox username entered at booking. They cannot be gifted, sold or transferred to another player.</div>
+            </div>
+          </div>
+          <div class="rs-rule">
+            <div class="rsr-num">04</div>
+            <div class="rsr-content">
+              <div class="rsr-title">Date Validity</div>
+              <div class="rsr-text">Entry is only permitted on the exact confirmed date. No date swaps, transfers or late entries are possible after confirmation.</div>
+            </div>
+          </div>
+          <div class="rs-rule">
+            <div class="rsr-num">05</div>
+            <div class="rsr-content">
+              <div class="rsr-title">Code of Conduct</div>
+              <div class="rsr-text">All guests must comply with park rules during the event. Violations — including disruptive behaviour — result in immediate removal without refund.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- GOLDEN TICKET -->
   <section class="section" id="golden-ticket-section" style="display:none">
@@ -247,6 +299,17 @@
         <div class="bk-cap-q" id="bk-cap-q">— + — = ?</div>
         <input id="bk-cap-a" type="number" placeholder="Your answer"/>
       </div>
+      <div class="bk-contact-row">
+        <div class="bk-contact-label">Contact method — how should we reach you?</div>
+        <div class="bk-contact-toggle">
+          <button class="bkct-btn active" id="bkct-discord" type="button">Discord</button>
+          <button class="bkct-btn" id="bkct-tiktok" type="button">TikTok</button>
+        </div>
+        <div class="bk-field" style="margin-top:10px">
+          <label id="bk-contact-label">Discord Username</label>
+          <input id="bk-contact" type="text" placeholder="Your Discord username" autocomplete="off" spellcheck="false"/>
+        </div>
+      </div>
       <div class="bk-err" id="bk-e1" style="display:none"></div>
       <button class="bk-btn-next" id="bk-n1">Continue to Rules →</button>
     </div>
@@ -295,6 +358,7 @@
         <div class="bksc-row"><span>Event</span><strong>Heide Park Roblox Weekend</strong></div>
         <div class="bksc-row"><span>Type</span><strong>Standard Entry · 1 Guest</strong></div>
         <div class="bksc-row"><span>Status after submit</span><strong class="bksc-status">⏳ Pending Approval</strong></div>
+        <div class="bksc-row"><span>Contact</span><strong id="bks-contact">—</strong></div>
         <div class="bksc-note">Once submitted, the admin will review and confirm your spot. You will be notified on Discord.</div>
       </div>
       <div class="bk-err" id="bk-e3" style="display:none"></div>
@@ -365,6 +429,17 @@
         <div class="bk-field" style="margin-top:22px">
           <label>Confirm your Roblox username</label>
           <input id="gt-uname" type="text" placeholder="Exact Roblox username" autocomplete="off"/>
+        </div>
+        <div class="bk-contact-row" style="margin-top:14px">
+          <div class="bk-contact-label">How should we contact you?</div>
+          <div class="bk-contact-toggle">
+            <button class="bkct-btn active" id="gtct-discord" type="button">Discord</button>
+            <button class="bkct-btn" id="gtct-tiktok" type="button">TikTok</button>
+          </div>
+          <div class="bk-field" style="margin-top:10px">
+            <label id="gt-contact-label">Discord Username</label>
+            <input id="gt-contact" type="text" placeholder="Your Discord username" autocomplete="off" spellcheck="false"/>
+          </div>
         </div>
         <div class="bk-err" id="gt-err" style="display:none"></div>
         <button class="bk-btn-submit" id="gt-submit" style="background:linear-gradient(135deg,#f0b800,#ffe066);color:#111;margin-top:16px">✦ Submit Golden Request</button>
